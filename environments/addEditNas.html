@@ -1,0 +1,253 @@
+<div class="ngdialog-message" ng-app ='addEditNasModule' ng-controller="addEditNasModuleController">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title">{{dialogTitle | translate}} NAS</span>
+    </div>
+    <div ng-if ='nasName || nasIp || nasShareName || (isNDMP && (NDMPcredentialName || NDMPcredentialUsername || NDMPcredentialPassword))' id="dialog-errors" style='display: block'>
+        <p class="summary error"></p>
+        <ul id="dialog-error-list" class="errorlist">
+            <li ng-if="nasName">
+                <label id="nas-name-error" class="error" style="display: inline;" for="nas-name-error">
+                    <translate>NAS name is required</translate>
+                </label>
+            </li>
+            <li ng-if="nasIp">
+                <label id="hostname-required" class="error" style="display: inline;" for="hostname-required">
+                    <translate>Hostname or IP address is required</translate>
+                </label>
+            </li>
+            <li ng-if="nasShareName">
+                <label id="sharename-required" class="error" style="display: inline;" for="sharename-required">
+                    <translate>Share name is required</translate>
+                </label>
+            </li>
+            <li ng-if="NDMPcredentialName">
+                <label id="credential-required" class="error" style="display: inline;" for="credential-required">
+                    <translate>Credential name is required</translate>
+                </label>
+            </li>
+            <li ng-if="NDMPcredentialUsername">
+                <label id="username-error" class="error" style="display: inline;" for="username-error">
+                    <translate>Username is required</translate>
+                </label>
+            </li>
+            <li ng-if="NDMPcredentialPassword">
+                <label id="password-error" class="error" style="display: inline;" for="password-error">
+                    <translate>Password is required</translate>
+                </label>
+            </li>
+        </ul>
+    </div>
+    <div class="ngdailog-body" style='padding: 5px;margin-bottom: 0;'>
+        <form id="form-server">
+            <div style="display:none;" ng-model='assetNAS.properties.nas_id' id="edit_object_id">none</div>
+            <div ng-hide="grandClient">
+                <div class="dialog-common-label" id="common_dialog_label">
+                    <label ng-if="!isEdit"><translate>Enter the details for the Network Attached Storage you would like to protect.</translate></label>
+                    <label ng-if="isEdit"><translate>Edit settings for</translate> {{assetNAS.name}}.</label>
+                </div>
+            </div>
+
+            <div class="modal-form-box" style="top: 10px;">
+                <h3><translate>Details</translate></h3>
+                <div class="control-row">
+                    <div class="control-group text">
+                        <label for="id_name">NAS <translate>Name</translate></label>
+                        <input type="text" ng-disabled='isEdit && !isNDMP' ng-model='assetNAS.name' maxlength="16" name="name" id="id_name" />
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                        <span class="definition" id = "host_name_tooltip">The name of the NAS, maximum 16 characters.</span>
+                    </div>
+
+                </div>
+                <div class="control-row">
+                    <div class="control-group text">
+                        <label for="id_system"><translate>Appliance</translate></label>
+                        <select ng-disabled='isEdit' ng-model='assetNAS.system' ng-options="obj.id as obj.name for obj in applianceList"
+                                name="system" style="margin-left: 10px" id="id_system"
+                                ng-change="getApplianceEncryptionStatusForNAS(assetNAS.system, assetNAS.is_encrypted, isEdit)" >
+                        </select>
+                    </div>
+                </div>
+                <div class="control-row">
+                    <div class="control-group text">
+                        <label for="id_ip"><translate>IP Address</translate></label>
+                        <input id="id_ip" type="text" ng-model='assetNAS.properties.hostname'  name="properties.hostname" maxlength="128" />
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                        <span class="definition" id = "ip_tooltip">
+                            <translate>Enter either the IP address or a resolvable hostname of this</translate> NAS.
+                        </span>
+                    </div>
+
+                </div>
+                <div class="control-row">
+                    <div class="control-group text"ng-disabled="isNDMP && isEdit">
+                        <label for="id_protocol"><translate>Protocol</translate></label>
+                        <select ng-model='assetNAS.properties.protocol' name="properties.protocol"  style="margin-left: 10px" id="id_protocol" ng-change='changePort()' ng-disabled="isNDMP && isEdit">
+                            <option value="nfs" >nfs</option>
+                            <option value="cifs">cifs</option>
+                            <option value="ndmp">ndmp</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-row">
+                    <div class="control-group spinner-group">
+                        <label for="id_port"><translate>Port</translate></label>
+                        <input type="number"  ng-model='assetNAS.properties.port' size="6" name="properties.port"
+                               onkeypress='return event.charCode >= 48 && event.charCode <= 57' id="id_port" />
+                    </div>
+                </div>
+                <div class="control-row" ng-hide="isNDMP">
+                    <div class="control-group text">
+                        <label for="id_share"><translate>Share Name</translate></label>
+                        <input ng-disabled='isEdit' type="text" ng-model='assetNAS.properties.share_name' name="properties.share_name" id="id_share" />
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition" id = "share_name_tooltip"><translate>The name of the share</translate>.</span>
+
+                </div>
+                <div class="control-row" ng-hide="!isEdit || !isNDMP">
+                    <div class="control-group text"><label for="id_vendor">Vendor</label><input ng-disabled="isEdit" type="text" ng-model='assetNAS.vendor' name="vendor" id="id_vendor" /></div>
+                </div>
+                <div class="control-row" style="margin: 0px;"  ng-show="isEdit || isNDMP">
+                    <div class="control-group checkbox modal-form-no-box" style="left: -10px;">
+                        <label for="id_nas_encrypted"><input type="checkbox" name="id_nas_encrypted" ng-model='assetNAS.is_encrypted' id="id_nas_encrypted" /> &nbsp;&nbsp;&nbsp; Encrypt Backups</label>
+                    </div>
+                </div>
+            </div>
+            <div class="control-row hidden">
+                <div class="control-group text">
+                    <label for="id_usage"><translate>Usage</translate></label>
+                    <input type="text" name="usage" ng-model='assetNAS.usage'  id="id_usage" />
+                </div>
+                <div class="control-group text">
+                    <label for="id_type"><translate>Type</translate></label>
+                    <input type="number"  ng-model='assetNAS.type' name="type" id="id_type" />
+                </div>
+            </div>
+            <div class="modal-form-box" id="id_CredentialsDiv" style="top: 10px;">
+                <h3><translate>Credentials</translate></h3>
+                <div class="control-row" ng-hide="!isNDMP">
+                    <div class="control-group select">
+                        <label for="credential_id"><translate>Credentials</translate></label>
+                        <select ng-model="selectedCredential" ng-change="credentialChange()" class="credentials-selection-list" ng-options='credential.name for credential in credentials' id="credential_id" style="min-width:80px;width: 230px" />
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition">
+                                    <translate>Include a username with administrator credentials</translate>.
+                    </span>
+
+                    <span class="btn-manage-credential" style="margin-left: 10px;">
+                        <a class="settings-edit" ng-click="launchCredentialManager(changePort)">
+                            <i class="icon-gears icon-large" style="margin-right: 10px;"></i><translate>Manage Credentials</translate></a>
+                    </span>
+                </div>
+                <div class="modal-form-credential" ng-hide="isNDMP">
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_username"><translate>Username</translate></label>
+                            <input type="text" ng-model='assetNAS.properties.username' name="properties.username" id="id_credentials_username" />
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                            <span class="definition">
+                                    <translate>Include a username with administrator credentials</translate>.
+                                </span>
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_password"><translate>Password</translate></label>
+                            <input type="password" ng-model='assetNAS.properties.password'  name="properties.password" id="id_credentials_password" />
+                        </div>
+                    </div>
+                </div>
+                <div id="id_credentials_form" class="modal-form-credential" ng-hide="!isNDMP">
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_displayName"><translate>Credential Name</translate></label>
+                            <input type="text" name="display_name" id="id_credentials_displayName" ng-model="credential.name" style="width: 230px" />
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Display name of credential</translate>.</span>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_username_ndmp"><translate>Username</translate></label>
+                            <input type="text" name="user_name" id="id_credentials_username_ndmp" ng-model="credential.username" style="width: 230px"/>
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Include a username with administrator credentials</translate>.</span>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_password_ndmp">Password</label>
+                            <input type="password" name="password" id="id_credentials_password_ndmp" style="width: 230px"/>
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Include a password with administrator credentials</translate>.</span>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_domain"><translate>Domain (Optional)</translate></label>
+                            <input type="text" name="domain" id="id_domain" style="width: 230px"/>
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group checkbox" style="margin-bottom: -20px;">
+                            <label for="id_default">
+                                <input type="checkbox" name="is_default" id="id_default" />
+                                <translate>Set as default</translate>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show='isEdit' class="modal-form-box" id="retentionSectionNAS" style="top: 10px;">
+                <h3><translate>Retention</translate></h3>
+                <div class="control-row">
+                  <div class="control-group select">
+                        <label for="id_retentionPolicy"><translate>Retention Policy</translate></label>
+                        <select name="id_retentionPolicy" class="retentionPolicyList" ng-model="asset.retention" id="id_retentionPolicy" ng-change="onChangePolicy()" style="width:150px">
+                            <option value="{{assetList.retention}}"></option>
+                        </select>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition">Select retention policy.</span>
+                    <span id="id-retention-definition" class="definition"><translate>Click Manage Retention to update the retention policy</translate>.</span>
+                    <span ng-show="showRetention" class="btn-manage-credential">
+                        <a class="settings-edit" ng-click="launchRetentionManager()">
+                            <i class="icon-gears icon-large"></i>&nbsp;&nbsp;<translate>Manage Retention</translate></a>
+                    </span>
+                    <span ng-show="!showRetention" class="btn-manage-credential">
+                        <a href><i class="icon-bancircle icon-large"></i><translate>Cannot be Changed</translate></a>
+                    </span>
+                  </div>
+                </div>
+            </div> <!-- end retentionSectionNAS -->
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button id="id_saveAsset" type="button" class="ngdialog-button" ng-click='saveNAS()' ><translate>Save</translate></button>
+        <button type="button" class="ngdialog-button" ng-click="closedAddEditNASDlg()"><translate>Cancel</translate></button>
+    </div>
+</div>
+
+<script>
+    var serverEdit = false;
+    var selectedCredential = 0;
+</script>

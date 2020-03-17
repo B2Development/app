@@ -1,0 +1,76 @@
+<div id="manage-retention-component">
+    <div class="ngdialog-message" ng-app="longTermRetention" ng-controller="LTRRetentionCtrl">
+        <div class="ngdialog-titlebar">
+            <span class="ngdialog-title" translate>Retention Policy Manager</span>
+        </div>
+
+        <div class="control-row">
+            <div class="control-group select" style="padding-left: 25px">
+                <label for="id_appliance">
+                    <translate>Appliance</translate>
+                </label>
+                <select id="id_appliance" name="name" style="width: 120px; float: left;" ng-model="selected"
+                        ng-options="item.name for item in applianceList track by item.id"
+                        ng-change="onChangeAppliance(selected.id)">
+                </select>
+            </div>
+        </div>
+
+        <!-- This is the retention policy manager that will be launched from the Configure > Copied Assets Page
+        Using the jobs-ui-grid class for styling.
+        -->
+        <article class="jobs-ui-grid" style="margin-top: 15px;">
+            <div id="copiedAssetsRetentionGrid"
+                 ui-grid="copyPagePolicies"
+                 ui-grid-selection
+                 ui-grid-resize-columns
+                 ui-grid-move-columns
+                 ui-grid-auto-resize
+                 ui-grid-save-state
+                 class="gridStyle ui-grid ui-grid-full-height"
+                 style="margin-bottom:0;font-size:12px;border-width:1px 1px 0 1px;">
+            </div>
+        </article>
+
+        <nav class="button-bar" style="margin-left:10px;margin-top:10px;margin-bottom:10px">
+            <ul>
+                <li>
+                    <a class="retention-add" ng-click="launchRetentionAddition()">
+                        <i class="icon-plussign icon-large"></i>
+                        <translate>Add</translate>
+                    </a>
+                </li>
+
+                <li>
+                    <a ng-click="launchRetentionEditor()"
+                       ng-class="{'disabled': selectedItem == null}"
+                       ng-disabled="selectedItem == null">
+                        <i class="icon-edit icon-large"></i>
+                        <translate>Edit</translate>
+                    </a>
+                </li>
+                <li>
+                    <a ng-click="RetentionRemove()"
+                       ng-class="{'disabled': selectedItem == null}"
+                       ng-disabled="selectedItem == null">
+                        <i class="icon-delete icon-large"></i>
+                        <translate>Remove</translate>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <footer class="modal-form-footer">
+            <div class="actions">
+                <div class="inner">
+                    <button type="button" class="btn" ng-click="closeThisDialog()">
+                        <translate>Close</translate>
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+
+
+

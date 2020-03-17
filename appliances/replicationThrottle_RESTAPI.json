@@ -1,0 +1,31 @@
+{
+
+  "throttle": [
+
+       {
+
+            "percentage": 50,
+
+            "days": [1 ,2, 3, 4, 5],
+
+            "starttime": 8,
+
+            "endtime": 18
+
+       },
+
+       {
+
+            "percentage": 90,
+
+            "days": [0, 6],
+
+            "starttime": 0,
+
+            "endtime": 0
+
+       }
+
+   ]
+
+}

@@ -1,0 +1,19 @@
+<div id="retention_period_control" class="recurrence-controls control-row inline" ng-controller="RetentionPeriodCtrl" ng-init="initCtrl()">
+    <div class="control-group checkbox">
+        <label for="retention-checkbox">
+            <input type="checkbox" id="retention-checkbox" name="retention-checkbox">
+            {{retentionLabel | translate}}
+        </label>
+    </div>
+    <div class="control-group" style="margin-left:4px">
+        <input type="text" id="retention-amount" name="retention-amount" value="1" size="4" maxlength="3">
+    </div>
+    <div class="control-group select" style="margin-left:6px">
+        <select id="retention-period" style="padding:0">
+            <option value="1">{{'Days' | translate}}</option>
+            <option value="7">{{'Weeks' | translate}}</option>
+            <option value="30">{{'Months' | translate}}</option>
+            <option value="365">{{'Years' | translate}}</option>
+        </select>
+    </div>
+</div>

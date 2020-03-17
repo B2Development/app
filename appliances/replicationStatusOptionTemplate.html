@@ -1,0 +1,51 @@
+<div class="ngdialog-message" ng-init="init()" ng-controller="BackupCopyOptionDialogController">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title"><translate>Backup Copy Options</translate></span>
+    </div>
+    <div class="ngdailog-body">
+        <form name = "backupCopyOptionForm" ng-submit="replicationPendingApproval()" novalidate>
+            <div class="control-row radios">
+                <label for="allow_backup_copy_radio" style="width: 100%;">
+                  <input type="radio" id="allow_backup_copy_radio" ng-value="'approval'" ng-model="backupCopySelection"
+                         name="backupcopyapprovalradiogroup" style="margin-right: 10px;" ng-change="onBackupCopyOptionChange()">
+                        <translate> Allow Backup Copies to be sent from</translate> {{ngDialogData.appliancename}} 
+               </label>
+            </div>
+            <div class="control-group select" style="padding-left:25px;" ng-show = "(backupCopySelection == 'approval')">
+                <div class="control-group text">
+                    <label for="backup-copy-selectstorage" style="width:100%"><translate>Select target storage to use:</translate></label>
+                </div>
+                <select id="backup-copy-selectstorage" name="name" 
+                        ng-model="applianceStoragename" ng-options="obj.name for obj in applianceStorageArr"
+                        ng-init="applianceStoragename = applianceStorageArr[0]"
+                        class="filter-type filter-select"  style="width: 210px;margin-left: 0px;margin-bottom:1em;">
+                </select>
+            </div>
+            <div class="control-row radios">
+                <label for="disallow_backup_copy_radio" style="width: 100%;">
+                  <input type="radio" id="disallow_backup_copy_radio" ng-value="'notapproval'" ng-model="backupCopySelection"
+                         name="backupcopyapprovalradiogroup" style="margin-right: 10px;" ng-change="onBackupCopyOptionChange()">
+                         <translate>Do not allow Backup Copies to be sent from</translate> {{ngDialogData.appliancename}} 
+               </label>
+            </div>
+            <div class="control-group textarea" style="padding-left:25px;" ng-show = "(backupCopySelection == 'notapproval')">
+                <textarea id="backup-copy-not-approval-textarea" name="strApprovalDeniedMessage" type="text" 
+                          ng-model="strApprovalDeniedMessage"
+                          placeholder="Enter a reason" style="min-height:70px;max-width:100%;font-size:12px;" > </textarea>
+            </div>
+
+            <div id="dialog-errors">
+                <p class="summary error"></p>
+                <ul id="dialog-error-list" class="errorlist"></ul>
+            </div>
+        </form>
+    </div>    
+    <div class="ngdialog-footer">
+        
+        <!--<button type="button" class="ngdialog-button" style="float:left;" disabled>Suspend</button>-->
+        <button type="button" class="ngdialog-button" ng-click="replicationPendingApproval()" 
+                ng-disabled="!selectionchangeflag" ><translate>Save</translate></button>
+        <button type="button" class="ngdialog-button" ng-click="closeThisDialog()"><translate>Cancel</translate></button>
+        
+    </div>
+</div>

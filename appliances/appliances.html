@@ -1,0 +1,657 @@
+<div class="environment full-height" ng-controller="AppliancesCtrl" ng-init="initCtrl()">
+
+    <header class="environment-header clearfix">
+
+        <nav class="button-bar">
+            <ul>
+                <!-- lmc TODO: hiding CE unsupported features -->
+                <li>
+                    <a class="settings-edit" ng-click="toggleView()">
+                        <i class="icon-thlarge icon-large"></i><translate> View: </translate>{{getView()}}</a>
+                </li>
+                <li ng-hide="isCE">
+                    <a class="settings-edit btn-add-appliance" ng-click="addAppliance()">
+                        <i class="icon-plussign icon-large"></i> <translate>Add Appliance</translate></a>
+                </li>
+                <li class="separator" ng-hide="isCE"></li>
+                <li>
+                    <a class="settings-edit btn-edit-appliance">
+                        <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                </li>
+                <li ng-hide="isCE">
+                    <a class="settings-edit btn-remove-appliance">
+                        <i class="icon-removecircle icon-large"></i> <translate>Remove</translate> </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section class="environment-appliances" ng-show="tableView">
+        <article class="appliance-list" >
+              <table id="appliancetable" class="appliance-table data-table">
+                <thead>
+                    <tr>
+                        <th class="sortable" data-sort="string" data-sort-dir="asc" data-source="name"><translate>Appliance</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="status"><translate>Status</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="ip" data-source="host"><translate>Address</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="version"><translate>Version</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="int" data-source="total_mb_size"><translate>Storage</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="int" data-source="registered_assets"><translate>Registered Assets</translate> <i class="sort-indicator"></i> </th>
+                        <!--<th data-source="archiving" translate>Archiving</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </article>
+
+        <div class="appliance-details sub-tabs-wrapper clearfix">
+            <ul id="tableSubTabNavigator" class="subTabNavigator">
+                <li><a id="tableStorageTab" href="#config-storage" class="storagesubtab"> <translate>Storage</translate> </a></li>
+                <li><a id="tableTargetsTab" href="#config-targets" class="targetssubtab"> <translate>Backup Copy Targets</translate> </a></li>
+                <li><a id="tableNetworkTab" href="#config-network" class="networksubtab"> <translate>Network</translate> </a></li>
+                <li><a id="tableInteractionsTab" href="#config-interactions" class="interactionssubtab"> <translate>Interactions</translate> </a></li>
+            </ul>
+            <div id="config-storage" class="sub-tab config-storage">
+                <nav class="button-bar">
+                    <ul>
+                        <li class="vba-storage-menu">
+                            <a class="btn-add-storage" ng-hide="isCE || isRecoverySeries">
+                                <i class="icon-plussign icon-large"></i>  <translate>Add Storage</translate>
+                                <span class="flyout-expand-down"></span></a>
+                            <ul>
+                                <li class="menu-group" data-bds="backup" ng-hide="isCE">
+                                    <a class="btn-add-attached"><i class="icon-uui-harddrive icon-large"></i> <translate>Attached</translate> </a>
+                                </li>
+                                <li class="menu-group" data-bds="backup" ng-hide="isCE">
+                                    <a class="btn-add-cifs" value="1"><i class="icon-uui-cifs icon-large"></i> <translate>CIFS</translate> </a>
+                                </li>
+                                <li class="menu-group" data-bds="backup" ng-hide="isCE"  >
+                                    <a class="btn-add-nfs" value="1"><i class="icon-uui-nfs icon-large"></i> <translate>NFS</translate> </a>
+                                </li>
+                                <li class="menu-group" data-bds="backup" ng-hide="isCE">
+                                    <a class="btn-add-iscsi"  value="1"><i class="icon-uui-iscsi icon-large"></i> <translate>iSCSI</translate> </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="separator" ng-hide="isCE"></li>
+                        <li>
+                            <a class="btn-edit-storage">
+                                <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                        </li>
+                        <li>
+                            <a class="btn-remove-storage">
+                                <i class="icon-removecircle icon-large"></i> <translate>Remove</translate> </a>
+                        </li>
+                        <li class="separator"></li>
+                        <li>
+                            <a class="btn-onoff-storage">
+                                <i class="icon-off icon-large"></i> <translate>Disable</translate> </a>
+                        </li>
+                    </ul>
+                </nav>
+                <table class="data-table bds-table">
+                    <thead>
+                    <tr>
+                        <th class="sortable" data-sort="string" data-sort-dir="desc" data-source="name"><translate>Name</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="status"><translate>Status</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="type"><translate>Type</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="percent_used"><translate>Capacity</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="mb_size"><translate>Total Size</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="mb_free"><translate>Free Space</translate> <i class="sort-indicator"></i> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="placeholder">
+                        <td colspan="7"> <translate>No Storage Found</translate> </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="config-targets" class="sub-tab config-targets">
+                <nav class="button-bar">
+                    <ul>
+                        <li class="vba-storage-menu">
+                            <a class="btn-add-target">
+                               <i class="icon-plussign icon-large"></i> <translate> Add Target</translate>
+                               <span class="flyout-expand-down"></span></a>
+
+                            <ul>
+                                <li class="menu-group" data-bds="archive">
+                                   <a class="flyout-menu-item" aria-haspopup="true">
+                                       <i class="icon-uui-unitrends-appliance2 icon-large" ></i>&nbsp;&nbsp;  Unitrends
+                                       <span class="flyout-expand-right"></span>
+                                   </a>
+                                   <ul class = "sub-menu">
+                                       <li class="menu-group" data-bds="replication" >
+                                           <a class="btn-replication-unitrends-cloud" ng-click="openUnitrendsCloudAddTargetDialog()">
+                                               <i class="icon-uui-unitrends-cloud2" style="margin-right:1.2em;"></i>  
+                                               <translate>Unitrends Cloud</translate>
+                                           </a>
+                                       </li>
+                                       <li class="menu-group" data-bds="replication" >
+                                           <a class="btn-replication-unitrends-appliance"  ng-click="openUnitrendsApplianceTargetDialog()">
+                                               <i class="icon-uui-unitrends-appliance2" style="margin-right:1.2em;"></i>  
+                                              <translate> Unitrends appliance</translate>
+                                           </a>
+                                       </li>
+                                   </ul>
+                               </li>
+                               <li class="menu-group" data-bds="archive">
+                                   <a class="btn-add-cloud"><i class="icon-uui-cloud icon-large" ></i>&nbsp;&nbsp;  <translate>Cloud</translate></a>
+                               </li>
+                               <li class="menu-group" data-bds="archive" ng-hide="isCE || isRecoverySeries">
+                                   <a class="btn-add-attached"><i class="icon-uui-harddrive icon-large" ></i> &nbsp;&nbsp;<translate>Attached</translate> </a>
+                               </li>
+                               <li class="menu-group" data-bds="archive" ng-hide="isCE">
+                                   <a><i class="icon-uui-nfs icon-large"  ></i> &nbsp;&nbsp;NAS <span class="flyout-expand-right" ></span>
+                                   </a>
+                                       <ul class = "sub-menu">
+                                           <li class="menu-group" data-bds="archive" ng-hide="isCE">
+                                               <a class="btn-add-cifs" value="0"><i class="icon-uui-cifs icon-large" ></i> <translate>CIFS</translate> </a>
+                                           </li>
+                                           <li class="menu-group" data-bds="archive" ng-hide="isCE">
+                                               <a class="btn-add-nfs" value="0"><i class="icon-uui-nfs icon-large" ></i> <translate>NFS</translate> </a>
+                                           </li>
+                                       </ul>
+
+                               </li>
+                               <li class="menu-group" data-bds="archive" ng-hide="isCE || isUEB">
+                                   <a class="btn-add-fc"><i class="icon-uui-fc icon-large"  ></i>&nbsp;&nbsp; <translate>FC</translate> </a>
+                               </li>
+                               <li class="menu-group" data-bds="archive" ng-hide="isCE">
+                                   <a class="btn-add-iscsi"  value="0"><i class="icon-uui-iscsi icon-large"  ></i> &nbsp;&nbsp;<translate>iSCSI</translate> </a>
+                               </li>
+                           </ul>
+                       </li>
+                       <li class="separator" ng-hide="isCE"></li>
+                       <li>
+                           <a class="btn-edit-target">
+                               <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                       </li>
+					   <li>
+                           <a ng-click="openImportDialog()" class="btn-import-target">
+								<i class="icon-phd-recover-rollback icon-large"></i> <translate>Import</translate> </a>
+                       </li>
+                       <li>
+                           <a class="btn-remove-target">
+                               <i class="icon-removecircle icon-large"></i> <translate>Remove</translate> </a>
+                       </li>
+                       <li class="separator"></li>
+                       <li>
+                           <a class="btn-onoff-target">
+                               <i class="icon-off icon-large"></i> <translate>Disable</translate> </a>
+                       </li>
+                       <li>
+                           <a class="btn-prepare-target" title="{{ 'Delete all backup copy data on the target.'|translate }}">
+                               <i class="icon-trashempty icon-large"></i>{{ handleMedia.method | translate }}</a>
+                       </li>
+                       <li>
+                           <a class="btn-refresh-targets">
+                               <i class="icon-refresh icon-large"></i><translate> Scan For Media</translate> </a>
+                       </li>
+                        <li class="vba-storage-menu">
+                            <a class="btn-add-target" title="{{ 'View/Manage sets on selected Cold Backup Copy Target.'|translate }}">
+                                <i class="icon-list icon-large"></i><translate>View Sets</translate>
+                                <span class="flyout-expand-down"></span></a>
+                            <ul>
+                                <li class="menu-group">
+                                    <a class="btn-show-media-sets"><i class="icon-uui-tape icon-large" ></i>
+                                        <translate>On Media</translate>
+                                    </a>
+                                </li>
+                                <li class="menu-group">
+                                    <a class="btn-show-appliance-sets"><i class="icon-uui-unitrends-appliance2 icon-large"></i>
+                                        <translate>In Catalog</translate>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+					   <!-- temporary hide Bandwidth button -->
+					   <li style="float:right">
+                            <a class="btn-edit-replicationbandwidth" ng-click="openReplicationBandwithDailog()">
+                                <i class="icon-bandwidth icon-large"></i><translate>Configure Bandwidth</translate> </a>
+                        </li>
+                   </ul>
+               </nav>
+               <table class="data-table targets-table">
+                   <thead>
+                   <tr>
+                       <th class="sortable" data-sort="string" data-sort-dir="desc" data-source="name"><translate>Name</translate> <i class="sort-indicator"></i> </th>
+                       <th class="sortable" data-sort="string" data-source="status"><translate>Status</translate> <i class="sort-indicator"></i> </th>
+                       <th class="sortable" data-sort="string" data-source="type"><translate>Type</translate> <i class="sort-indicator"></i> </th>
+                       <th class="sortable" data-sort="int" data-source="percent_used"><translate>Capacity</translate> <i class="sort-indicator"></i> </th>
+                       <th class="sortable" data-sort="int" data-source="gb_size"><translate>Total Size</translate> <i class="sort-indicator"></i> </th>
+                       <th class="sortable" data-sort="int" data-source="gb_free"><translate>Free Space</translate> <i class="sort-indicator"></i> </th>
+                       <th class="sortable" data-sort="int" data-source="max_size"><translate>Storage Threshold</translate> <i class="sort-indicator"></i> </th>
+                       <th class="sortable" data-sort="string" data-source="media_label"><translate>Media Label</translate> <i class="sort-indicator"></i> </th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr class="placeholder">
+                       <td colspan="7"> <translate>No Targets Found </translate></td>
+                   </tr>
+                   </tbody>
+               </table>
+            </div>
+            <div id="config-network" class="sub-tab config-network">
+                <nav class="button-bar">
+                    <ul>
+                        <li>
+                            <a class="btn-refresh-nics">
+                                <i class="icon-refresh icon-large"></i> <translate>Refresh</translate> </a>
+                        </li>
+                        <li>
+                            <a class="btn-edit-nic">
+                                <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                        </li>
+                        <li class="separator"></li>
+                        <li>
+                            <a class="btn-advanced-hosts">
+                                <i class="icon-edit icon-large"></i> <translate>Edit Hosts File </translate></a>
+                        </li>
+                        <li>
+                            <a class="btn-advanced-ports">
+                                <i class="icon-securityalt icon-large"></i> <translate>Ports</translate> </a>
+                        </li>
+                    </ul>
+                </nav>
+                <table class="data-table network-table">
+                    <thead>
+                    <tr>
+                        <th class="sortable" data-sort="string"  data-sort-dir="desc" data-source="name"><translate>Adapter</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="mac"><translate>MAC Address</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="ip"><translate>IP Address</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="gateway"><translate>Gateway</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="netmask"><translate>Subnet Mask</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="dns1"><translate>DNS1</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="dns2"><translate>DNS2</translate> <i class="sort-indicator"></i> </th>
+                        <th data-source="search"><translate>DNS Search</translate></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="placeholder">
+                        <td colspan="8"> <translate>No Network Information Found</translate> </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="config-interactions" class="sub-tab config-interactions">
+                <nav class="button-bar">
+                    <ul>
+                        <li>
+                            <a class="btn-add-interactions">
+                                <i class="icon-plussign icon-large"></i> <translate>Add</translate> </a>
+                        </li>
+                        <li class="separator"></li>
+                        <li>
+                            <a class="btn-edit-interactions">
+                                <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                        </li>
+                        <li>
+                            <a class="btn-remove-interactions">
+                                <i class="icon-removecircle icon-large"></i> <translate>Remove</translate> </a>
+                        </li>
+                        <li class="separator"></li>
+                        <li>
+                            <a class="btn-test-ticket">
+                                <i class="icon-rawaccesslogs icon-large"></i> <translate>Send Test Ticket</translate> </a>
+                        </li>
+                        <li>
+                            <a class="btn-ticket-history">
+                                <i class="icon-rawaccesslogs icon-large"></i> <translate>View Ticket History</translate> </a>
+                        </li>
+
+                    </ul>
+                </nav>
+                <table class="data-table interactions-table">
+                    <thead>
+                    <tr>
+                        <th class="sortable" data-sort="string"  data-sort-dir="desc" data-source="tool_name"> <translate>Tool</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="url"><translate>URL</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="company"><translate>Company</translate> <i class="sort-indicator"></i> </th>
+                        <th class="sortable" data-sort="string" data-source="credentials"><translate>Credentials</translate> <i class="sort-indicator"></i> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="placeholder">
+                        <td colspan="4"> <translate>No Interaction Tools Supported</translate> </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        
+         </div>
+    </section>
+    
+    <!-- List view is under construction below -->
+    
+    <section class="environment-appliances" ng-show="!tableView">
+        <div class="configure-appliances-list">
+            <div id="{{appliance.id}}" class="appliance-list-block clickable" ng-repeat="appliance in applianceDataArr"
+                 ng-click="selectApplianceFromList(appliance.id, true)"
+                 style="width:100%;margin-bottom:10px;">
+                <span class="appliance-heading">{{appliance.name}}</span>
+                <i title="Online" 
+                   ng-class="{'icon-okcircle icon-large text-standard': appliance.online, 'icon-exclamationsign icon-large text-standard': !appliance.online }" 
+                   style="float:right;margin-right:10px;font-size:1em;"></i>
+                <br/>
+                <br/>
+                <article style="width:100%;">
+                    <img src="assets/images/favicon.ico" height="20" width="20">
+                    <span class="appliance-heading" 
+                          style="font-size:14px;margin-left:10px;font-weight:normal;">{{appliance.customer_name}}</span>
+                </article>
+                <article style="width:100%;text-align:center;" ng-show="appliance.local">
+                    <i><span class="appliance-heading" 
+                          style="font-size:12px;width:100%;float:none;color:#19A347;">logged in</span></i>
+                </article>
+            </div>
+        </div>
+        <div class="configure-appliances-list-detailbox">
+            <!-- new detail in list -->
+            <div class="appliance-list-detail-block">
+                <table style="width:100%;float:left;line-height:3;height: 100%;">
+                 
+                        <tr>
+                            <td style="width:30%; text-align:left;padding-right: 10px;">
+                                <span class="appliance-heading" style="font-size:24px;">{{selectedAppliance.name}}</span>
+                            </td>
+                            <td style="width:50%; word-spacing: 30px;text-align:left;font-size:1.5em;margin-top:15px;">
+                                <i title="{{listViewApplianceRoleTooltipText()}}" class="{{listApplianceIcon() + ' icon-large text-standard'}}">
+                                </i>
+                                <i title="Encryption" class="icon-security icon-large text-standard" ng-show=""></i>
+                            </td>
+                            <td style="width:20%;"></td>
+                        </tr>
+                   
+                    <tr>
+                        <td style="width:30%; text-align:left;">
+                            <span class="appliance-heading"
+                                  style="float:none;font-weight:normal;padding-right:10px;"><translate>IP Address:</translate></span>
+                            <span class="appliance-heading" style="float:none;font-weight:bold;padding-right:10px;">
+                                {{selectedAppliance.host}}</span>
+                        </td>
+                        <td style="text-align:left;">
+                           <span class="appliance-heading"
+                                  style="float:none;font-weight:normal;padding-right:10px;"><translate>Appliance</translate>:</span>
+                            <span class="appliance-heading"
+                                  style="float:none;font-weight:normal;padding-right:10px;line-height:1;font-size:13px;">{{selectedAppliance.name}}</span>
+       
+                        </td>
+                        <td style="padding-top:12px; padding-right:20px; float:right;">
+                           <span class="appliance-heading" style="font-weight:normal;"><translate>Version</translate>:</span>
+                           <span class="appliance-heading" style="font-weight:bold;">{{selectedAppliance.version | major_minor_filter }}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="appliance-details sub-tabs-wrapper clearfix">
+                <ul id="listSubTabNavigator" class="subTabNavigator">
+                    <li><a id="listStorageTab" href="#config-storage-list" class="storagesubtab"> <translate>Storage</translate> </a></li>
+                    <li><a id="listTargetsTab" href="#config-targets-list" class="targetssubtab"> <translate>Backup Copy Targets</translate> </a></li>
+                    <li><a id="listNetworkTab" href="#config-network-list"  class="networksubtab"> <translate>Network</translate> </a></li>
+                    <li><a id="listInteractionsTab" href="#config-interactions-list"  class="interactionssubtab"> <translate>Interactions</translate> </a></li>
+                </ul>
+                <div id="config-storage-list" class="sub-tab config-storage">
+                    <nav class="button-bar">
+                        <ul>
+                            <li class="vba-storage-menu">
+                                <a class="btn-add-storage" ng-hide="isCE">
+                                    <i class="icon-plussign icon-large"></i>  <translate>Add Storage</translate>
+                                    <span class="flyout-expand-down"></span></a>
+                                <ul>
+                                    <li>
+                                        <a class="btn-add-attached"><i class="icon-uui-harddrive icon-large"></i> <translate>Attached</translate> </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn-add-cifs"  value="1"><i class="icon-uui-cifs icon-large"></i> <translate>CIFS</translate> </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn-add-nfs" value = "1"><i class="icon-uui-nfs icon-large"></i> <translate>NFS</translate> </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn-add-iscsi"  value="1"><i class="icon-uui-iscsi icon-large"></i> <translate>iSCSI</translate> </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="separator" ng-hide="isCE"></li>
+                            <li>
+                                <a class="btn-edit-storage">
+                                    <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                            </li>
+                            <li>
+                                <a class="btn-remove-storage">
+                                    <i class="icon-removecircle icon-large"></i> <translate>Remove</translate> </a>
+                            </li>
+                            <li class="separator"></li>
+                            <li>
+                                <a class="btn-onoff-storage">
+                                    <i class="icon-off icon-large"></i> <translate>Disable</translate> </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <table class="data-table bds-table-list">
+                        <thead>
+                        <tr>
+                            <th class="sortable" data-sort="string" data-sort-dir="desc" data-source="name"><translate>Name</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="status"><translate>Status</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="type"><translate>Type</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="percent_used"><translate>Capacity</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="mb_size"><translate>Total Size</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="mb_free"><translate>Free Space</translate> <i class="sort-indicator"></i> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="placeholder">
+                            <td colspan="7"> <translate>No Storage Found</translate> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="config-targets-list" class="sub-tab config-targets">
+                    <nav class="button-bar">
+                        <ul>
+                            <li class="vba-storage-menu">
+                                <a class="btn-add-target">
+                                    <i class="icon-plussign icon-large"></i>  <translate>Add Target</translate>
+                                    <span class="flyout-expand-down"></span></a>
+                                <ul>
+                                    <li class="menu-group" data-bds="archive">
+                                        <a class="flyout-menu-item" aria-haspopup="true">
+                                            <i class="icon-uui-unitrends-appliance2 icon-large" ></i>&nbsp;&nbsp;  Unitrends
+                                            <span class="flyout-expand-right"></span>
+                                        </a>
+                                        <ul class = "sub-menu">
+                                            <li class="menu-group" data-bds="replication" >
+                                                <a class="btn-replication-unitrends-cloud" ng-click="openUnitrendsCloudAddTargetDialog()">
+                                                    <i class="icon-uui-unitrends-cloud2" style="margin-right:1.2em;"></i>  <translate>Unitrends Cloud</translate></a>
+                                            </li>
+                                            <li class="menu-group" data-bds="replication" >
+                                                <a class="btn-replication-unitrends-appliance"  ng-click="openUnitrendsApplianceTargetDialog()">
+                                                    <i class="icon-uui-unitrends-appliance2" style="margin-right:1.2em;"></i>  <translate>Unitrends Appliance</translate></a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-group" data-bds="archive">
+                                        <a class="btn-add-cloud"><i class="icon-uui-cloud icon-large" ></i>&nbsp;&nbsp;  <translate>Cloud</translate></a>
+                                    </li>
+                                    <li class="menu-group" data-bds="archive" ng-hide="isCE">
+                                        <a class="btn-add-attached"><i class="icon-uui-harddrive icon-large" ></i> &nbsp;&nbsp;<translate>Attached</translate> </a>
+                                    </li>
+                                    <li class="menu-group" data-bds="archive" ng-hide="isCE">
+                                        <a><i class="icon-uui-nfs icon-large"  ></i> &nbsp;&nbsp;<translate>NAS</translate> <span class="flyout-expand-right" ></span>
+                                        </a>
+                                        <ul class = "sub-menu">
+                                            <li class="menu-group" data-bds="archive" ng-hide="isCE">
+                                                <a class="btn-add-cifs" value="0"><i class="icon-uui-cifs icon-large" ></i> <translate>CIFS</translate> </a>
+                                            </li>
+                                            <li class="menu-group" data-bds="archive" ng-hide="isCE">
+                                                <a class="btn-add-nfs" value="0"><i class="icon-uui-nfs icon-large" ></i> <translate>NFS</translate> </a>
+                                            </li>
+                                        </ul>
+
+                                    </li>
+                                    <li class="menu-group" data-bds="archive" ng-hide="isCE || isUEB">
+                                        <a class="btn-add-fc"><i class="icon-uui-fc icon-large"  ></i>&nbsp;&nbsp; <translate>FC</translate> </a>
+                                    </li>
+                                    <li class="menu-group" data-bds="archive" ng-hide="isCE">
+                                        <a class="btn-add-iscsi"  value="0"><i class="icon-uui-iscsi icon-large"  ></i> &nbsp;&nbsp;<translate>iSCSI</translate> </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="separator" ng-hide="isCE"></li>
+                            <li>
+                                <a class="btn-edit-target">
+                                    <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                            </li>
+                            <li>
+                                <a class="btn-remove-target">
+                                    <i class="icon-removecircle icon-large"></i> <translate>Remove</translate> </a>
+                            </li>
+                            <li class="separator"></li>
+                            <li>
+                                <a class="btn-onoff-target">
+                                    <i class="icon-off icon-large"></i> <translate>Disable</translate> </a>
+                            </li>
+                            <li>
+                                <a class="btn-prepare-target">
+                                    <i class="icon-trashempty icon-large"></i>{{ handleMedia.method }}</a>
+                            </li>
+                            <li>
+                                <a class="btn-refresh-targets">
+                                    <i class="icon-refresh icon-large"></i> <translate>Scan For Media</translate> </a>
+                            </li>
+                            <li class="vba-storage-menu">
+                                <a class="btn-add-target" title="{{ 'View/Manage sets on selected Cold Backup Copy Target.'|translate }}">
+                                    <i class="icon-list icon-large"></i><translate>View Sets</translate>
+                                    <span class="flyout-expand-down"></span></a>
+                                <ul>
+                                    <li class="menu-group">
+                                        <a class="btn-show-media-sets"><i class="icon-uui-tape icon-large" ></i>
+                                            <translate>On Media</translate>
+                                        </a>
+                                    </li>
+                                    <li class="menu-group">
+                                        <a class="btn-show-appliance-sets"><i class="icon-uui-unitrends-appliance2 icon-large"></i>
+                                            <translate>In Catalog</translate>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+							<li style="float:right">
+                            <a class="btn-edit-replicationbandwidth" ng-click="openReplicationBandwithDailog()">
+                                <i class="icon-bandwidth icon-large"></i><translate>Configure Bandwidth</translate> </a>
+                        </li>
+                        </ul>
+                    </nav>
+                    <table class="data-table targets-table-list">
+                        <thead>
+                        <tr>
+                            <th class="sortable" data-sort="string" data-sort-dir="desc" data-source="name"><translate>Name</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="status"><translate>Status</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="type"><translate>Type</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="int" data-source="percent_used"><translate>Capacity</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="int" data-source="gb_size"><translate>Total Size</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="int" data-source="gb_free"><translate>Free Space</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="int" data-source="max_size"><translate>Storage Threshold</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="media_label"><translate>Media Label</translate> <i class="sort-indicator"></i> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="placeholder">
+                            <td colspan="7"> <translate>No Targets Found</translate> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="config-network-list" class="sub-tab config-network">
+                    <nav class="button-bar">
+                        <ul>
+                            <li>
+                                <a class="btn-refresh-nics">
+                                    <i class="icon-refresh icon-large"></i> <translate>Refresh</translate> </a>
+                            </li>
+                            <li>
+                                <a class="btn-edit-nic">
+                                    <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                            </li>
+                            <li class="separator"></li>
+                            <li>
+                                <a class="btn-advanced-hosts">
+                                    <i class="icon-edit icon-large"></i> <translate>Edit Hosts File</translate> </a>
+                            </li>
+                            <li>
+                                <a class="btn-advanced-ports">
+                                    <i class="icon-securityalt icon-large"></i> <translate>Ports</translate> </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <table class="data-table network-table-list">
+                        <thead>
+                        <tr>
+                            <th class="sortable" data-sort="string"  data-sort-dir="desc" data-source="name"><translate>Adapter</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="mac"><translate>MAC Address</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="ip"><translate>IP Address</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="gateway"><translate>Gateway</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="netmask"><translate>Subnet Mask</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="dns1"><translate>DNS1</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="dns2"><translate>DNS2</translate> <i class="sort-indicator"></i> </th>
+                            <th data-source="search"><translate>DNS Search</translate></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="placeholder">
+                            <td colspan="8"><translate> No Network Information Found</translate> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="config-interactions-list" class="sub-tab config-interactions">
+                    <nav class="button-bar">
+                        <ul>
+                            <li>
+                                <a class="btn-add-interactions">
+                                    <i class="icon-plussign icon-large"></i> <translate>Add</translate> </a>
+                            </li>
+                            <li class="separator"></li>
+                            <li>
+                                <a class="btn-edit-interactions">
+                                    <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                            </li>
+                            <li>
+                                <a class="btn-remove-interactions">
+                                    <i class="icon-removecircle icon-large"></i> <translate>Remove</translate> </a>
+                            </li>
+                            <li class="separator"></li>
+                            <li>
+                                <a class="btn-test-ticket">
+                                    <i class="icon-plussign icon-large"></i> <translate>Send Test Ticket</translate> </a>
+                            </li>
+                            <li>
+                                <a class="btn-ticket-history">
+                                    <i class="icon-plussign icon-large"></i> <translate>View Ticket History</translate> </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <table class="data-table interactions-table-list">
+                        <thead>
+                        <tr>
+                            <th class="sortable" data-sort="string"  data-sort-dir="desc" data-source="tool_name"><translate>Tool</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="url"><translate>URL</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="company"><translate>Company</translate> <i class="sort-indicator"></i> </th>
+                            <th class="sortable" data-sort="string" data-source="credentials"><translate>Credentials</translate> <i class="sort-indicator"></i> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="placeholder">
+                            <td colspan="4"> <translate>No Interaction Tools Supported</translate> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

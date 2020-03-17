@@ -1,0 +1,28 @@
+<div ng-app="advancedToolbox" ng-controller="advancedToolboxCtrl" id="advancedToolboxDialog">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title" id = "title"><i class="icon-tools" style="padding-right:10px"></i><translate>Support Toolbox (Advanced)</translate></span>
+    </div>
+
+    <form id="toolbox-form">
+        <section id="toolbox-command-list" style="height:450px;overflow:auto">
+            <article id="{{command.name}}" class="toolbox-list-block clickable" ng-repeat="command in commands"
+                     ng-click="runCommand(command.name)" title="Click to run '{{command.name}}' command">
+                <article style="width:100%">
+                    <span class="toolbox-heading" style="width:100%">{{command.name}}</span>
+                </article>
+                <article style="width:100%;margin-top:4px">
+                    <span class="toolbox-heading" style="font-size:12px;font-weight:normal;">{{command.description}}</span>
+                </article>
+            </article>
+        </section>
+
+        <footer id="toolbox-form-footer" class="modal-form-footer">
+            <div class="actions">
+                <div class="inner">
+                    <button id="btnCancel" type="button" class="btn btnCancel" style="margin-left:40px" ng-click="closeThisDialog()"><translate>Close</translate></button>
+                </div>
+            </div>
+        </footer>
+
+    </form>
+</div>

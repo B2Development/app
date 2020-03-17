@@ -1,0 +1,62 @@
+<div ng-controller="GeneralApplianceCtrl">
+
+<form id="form-add-appliance" action="/api/hostname/">
+    <section class="modal-form-content general-details">
+    <div class="modal-form-box">
+        <h3>Details</h3>
+        <div class="control-row">
+
+            <div class="control-group text view-general-details"><label for="id_name"><translate>Name</translate></label><input id="id_name" type="text" name="name" required maxlength="128" disabled/></div>
+            <div class="help-trigger">
+                <i class="icon-questionsign"></i>
+            </div>
+            <span class="definition">
+                <translate>The name of the Unitrends appliance being managed.</translate>
+                <translate>Editable from the logged-in appliance only.</translate>
+            </span>
+        </div>
+
+        <div class="control-row">
+            <div class="control-group text view-general-details"><label for="id_ip"><translate>IP Address</translate></label><input id="id_ip" type="text" name="ip" maxlength="128" required /></div>
+            <div class="help-trigger">
+                <i class="icon-questionsign"></i>
+            </div>
+            <span class="definition">
+               <translate>The IP address of the Unitrends appliance being managed.</translate>
+                <translate>Editable from the logged-in appliance only.</translate>
+            </span>
+        </div>
+        <div class="control-row">
+            <div class="control-group text view-general-details"><label for="id_longname">FQDN</label><input id="id_longname" type="text" name="long_name" maxlength="255" /></div>
+            <div class="help-trigger">
+                <i class="icon-questionsign"></i>
+            </div>
+            <span class="definition">
+               <translate> Fully qualified domain name of the Unitrends appliance.</translate>
+                <translate>Editable from the logged-in appliance only.</translate>
+            </span>
+        </div>
+    </div>
+
+    </section>
+
+
+    <footer id="vba-form-footer" class="modal-form-footer">
+        <div class="actions">
+            <div class="inner">
+                <button id="btnShutdownRestart" type="button" class="btn" style="float:left"><translate>Shutdown/Restart</translate></button>
+                <button id="btnEditApplianceSave" type="button" type="submit" class="btn"><translate>Save</translate></button>
+                <button type="button" data-action="cancel" class="btn">Cancel</button>
+            </div>
+        </div>
+    </footer>
+
+    <div style="display:none;" id="edit_object_id"><translate>none</translate></div>
+
+    <input type="hidden" name="location_id" id="id_location_id" data-itemtype="number" value="1"/>
+
+    <input type="hidden" name="host" id="id_host" />
+
+    <div id="dialog-errors"><p class="summary error"></p><ul id="dialog-error-list" class="errorlist"></ul></div>
+</form>
+</div>

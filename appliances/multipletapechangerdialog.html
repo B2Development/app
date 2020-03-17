@@ -1,0 +1,36 @@
+<div class="ngdialog-message" >
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title">{{dialogHeadings}}</span>
+    </div>
+    <div class="ngdailog-body">
+         <div style='font-size:1.2em;'>
+             <span class="icon-warningsign icon" style="width: 100%; margin: 16px 5px 0;" ></span>
+             <label style="width: 100%;"> {{descriptionParaOne}}</label><br>
+             <label ng-if="emptyChangerNames.length > 0" style="width: 100%;line-height:30px"> {{emptyChangerWarning}}</label><br/>
+            <label style="width: 100%;margin-left: 27px;">{{descriptionParaTwo}}</label>
+        </div> 
+        <br style='clear:both'>      
+        <br>
+        <div style="width:720px;overflow-x:auto;white-space:nowrap;padding-bottom:10px;line-height:24px">
+            <label style="font-weight:bold;font-size:1.2em;">
+                <translate>Changer</translate></label>
+            <label ng-repeat="name in changerNames">
+                <span ng-style="$index==0 ? {'margin-left':'16px'} : {'margin-left': '20px'}"
+                      style="display:inline-block;width:200px;font-size:1.2em;overflow-x:hidden;vertical-align:bottom" title="{{name}}">{{name}}</span>
+            </label>
+            <br>
+            <label style="font-weight:bold;font-size:1.2em;margin-right:12px">
+                <translate>Drive</translate></label>
+            <label ng-repeat="Obj in tapeDropDownObject">
+                <select style="margin-left:20px;display:inline-block;width:200px;font-size:1.2em;overflow-x:hidden;vertical-align:bottom"
+                        ng-model="Obj.name" ng-options="tapeName for tapeName in tapeNames"
+                        ng-class="$index==0?'first-child-select-tape-changer':'rest-child-select-tape-changer'">
+                </select>
+            </label>
+        </div>
+    </div>
+    <div class="ngdialog-footer">
+        <button type="button" class="ngdialog-button" ng-click="associateMultipleChanger()"><translate>Yes</translate></button>
+        <button type="button" class="ngdialog-button" ng-click="closeThisDialog()"><translate>Cancel</translate></button>
+    </div>
+</div>

@@ -1,0 +1,201 @@
+<div class="ngdialog-message" ng-controller="HypervisorCtrl" xmlns="http://www.w3.org/1999/html">
+
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title"><translate>Add</translate> <translate>Virtual Host</translate></span>
+    </div>
+
+    <div class="ngdailog-body" style="padding: 5px;margin-bottom: 0;">
+        <form name = "HypervisorForm"  novalidate>
+
+            <div ng-hide="grandClient">
+            <div class="dialog-common-label" id = "id_description">
+                <label style="margin-left:19px;">
+                    <translate>Enter the details of the virtual host you would like to manage.</translate>
+                </label>
+            </div>
+            </div>
+
+            <div class="modal-form-box" style="top: 10px;">
+                <h3><translate>Details</translate></h3>
+                <div class="control-row">
+                    <div class="control-group select">
+                        <label for="id_os_type"><translate>Hypervisor</translate></label>
+                        <select name="os_type" id="id_os_type" style="width: 230px">
+                            <option value="VMware" selected="selected">VMware</option>
+                            <option value="HyperV">Hyper-V</option>
+                            <option value="Xen">Citrix XenServer</option>
+                            <option ng-show="showAHV" value="AHV Host">Nutanix AHV</option>
+                        </select>
+                    </div>
+                    <div class="help-trigger" id="hypervisor_tooltip_help">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                        <span class="definition" id = "hypervisor_tooltip">
+                            <translate>Microsoft Hyper-V servers require the Unitrends agent installed before they can be added. Either download the agent from the</translate>
+                            <a target='_blank' href='https://support.unitrends.com/UnitrendsBackup/s/downloads'><translate>product website</translate></a>,
+                            <translate>or use the Add Asset dialog with the Install Agent option checked.</translate>
+                        </span>
+                </div>
+                <div class="control-row">
+                    <div class="control-group select">
+                        <label for="id_system"><translate>Appliance</translate></label>
+                        <select name="system" id="id_system" style="width: 230px">
+                        </select>
+                    </div>
+                </div>
+                <div class="control-row" id="id_hostnameDiv">
+                    <div class="control-group text">
+                        <label for="id_server"><translate>Host name</translate></label>
+                        <input type="text" name="name" id="id_server" style="width: 230px"/>
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                        <span class="definition" id = "host_name_tooltip">
+                            <translate>The resolvable hostname of the vCenter Server, vSphere, Nutanix AHV, or Hyper-V host.</translate>
+                        </span>
+                </div>
+                <div class="control-row">
+                    <div class="control-group text">
+                        <label for="id_ip"><translate>IP Address</translate></label>
+                        <input id="id_ip" type="text" name="host_info.ip" maxlength="128" style="width: 230px" />
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                        <span class="definition" id = "ip_tooltip">
+                            <translate>For a VMware or Nutanix AHV host, enter the IP address. For a Hyper-V host, enter the IP address or hostname.</translate>
+                        </span>
+                </div>
+            </div>
+
+            <div class="modal-form-box" id="id_CredentialsDiv" style="top: 10px;">
+                <h3><translate>Credentials</translate></h3>
+                <div class="control-row">
+                    <div class="control-group text">
+                        <label for="id_user_name"><translate>Username</translate></label>
+                        <input type="text" name="credentials.username" id="id_user_name" style="width: 230px" />
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition"><translate>Include a username with administrator credentials. Include domain with username if needed, example: DOMAIN\user or user@domain.</translate>.</span>
+                </div>
+                <div class="control-row">
+                    <div class="control-group text">
+                        <label for="id_password"><translate>Password</translate></label>
+                        <input type="password" name="credentials.password" id="id_password" style="width: 230px" />
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition"><translate>Include a password with administrator credentials</translate>.</span>
+                </div>
+            </div>
+
+            <div class = "modal-form-box" id = "quiesce_box" style="top: 10px;height:140px;">
+                <h3><translate>Quiesce</translate></h3>
+                <div  style="width:120px;margin: 0px;float: left;padding-top: 18px;font-size: 12px;">
+                    <label><translate>Quiesce Settings</translate></label>
+                </div>
+                <div style="float:left;">
+                    <div class="control-row radios" id="quiesce_multiple_settings_radioselection_row">
+                        <label for="quiesce_multiple_settings_radioselection" style="width: 100%;">
+                            <input type="radio" id="quiesce_multiple_settings_radioselection" value="multiple"
+                                   ng-model="quiesceSetting" style="margin-right: 10px;" checked >
+                            <translate>Keep Existing Quiesce Settings</translate>
+                            <div class="help-trigger" style="margin-left: 10px; margin-right: 10px;">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition">
+                                <translate>Select this option to have the assets keep their previously existing quiesce settings.</translate>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="control-row radios">
+                        <label for="quiesce_crash_consistent_radioselection" style="width: 100%;">
+                            <input type="radio" id="quiesce_crash_consistent_radioselection" value="Crash Consistent"
+                                   ng-model="quiesceSetting" style="margin-right: 10px;">
+                            <translate>Overwrite this hypervisor's VMs to Crash Consistent</translate>
+                            <div class="help-trigger" style="margin-left: 10px; margin-right: 10px;">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition">
+                                <translate>The VM is not quiesced before a backup is taken</translate>.
+                                <translate>This is the fastest quiesce setting.</translate>
+                                <translate>VMs that currently have a quiesce setting of Application Aware will not have their quiesce setting overwritten.</translate>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="control-row radios">
+                        <label for="quiesce_app_consistent_radioselection" style="width: 100%;">
+                            <input type="radio" id="quiesce_app_consistent_radioselection" value="Application Consistent"
+                                   ng-model="quiesceSetting" style="margin-right: 10px;">
+                            <translate>Overwrite this hypervisor's VMs to Application Consistent</translate>
+                            <div class="help-trigger" style="margin-left: 10px; margin-right: 10px;">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition">
+                                <translate>Guest operating system invokes VSS for Windows (or another similar process in non-Windows OS, if supported by the hypervisor).</translate>
+                                <translate>This results in applications and file systems flushing their transactions prior to completing the disk snapshot.</translate>
+                                <translate>VMs that currently have a quiesce setting of Application Aware will not have their quiesce setting overwritten.</translate>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-form-box" id="retentionSection" style="top: 10px;">
+                <h3> <input type="checkbox" id="retention_is_allowed"><translate>VM Backup Retention</translate></h3>
+                <p>
+                    <translate>Retention settings are applied to all VMs associated with this virtual host. Existing retention settings will be overwritten.</translate>
+                </p>
+
+                <div class="control-row">
+                    <div class="control-group select">
+
+                        <label for="id_Hypervisor_retentionPolicy"><translate>Retention Policy</translate></label>
+
+                        <select ng-disabled="retentionStrategy === 'MinMax'" name="id_retentionPolicy" class="retentionPolicyList" id="id_Hypervisor_retentionPolicy"
+                                ng-model="selectedRetention" ng-change="onChangePolicy()" style="width: 230px"></select>
+
+                        <div class="help-trigger" style="width: 30px;">
+                            <i class="icon-questionsign"></i>
+                        </div>
+
+                        <span class="definition">Select retention policy.</span>
+
+                        <span id="id-retention-definition" class="definition"><translate>Click Manage Retention to update the retention policy</translate>.</span>
+                        <span ng-show="showRetention" class="btn-manage-credential" >
+                        <a class="settings-edit" ng-click="launchRetentionManager()">
+                            <i class="icon-gears icon-large"></i>&nbsp;&nbsp;<translate>Manage Retention</translate></a>
+                    </span>
+                        <span ng-show="!showRetention" class="btn-manage-credential" >
+                        <a href><i class="icon-bancircle icon-large"></i>&nbsp;&nbsp;Cannot be Changed</a>
+                    </span>
+                    </div>
+            </div>
+            </div>
+
+            <div id="quiesce_default_settings_label" style="padding-top: 18px;font-size: 12px;">
+                <label>{{quiesce_setting_string}}</label>
+            </div>
+
+            <div id="dialog-errors">
+                <p class="summary error"></p>
+                <ul id="dialog-error-list" class="errorlist"></ul>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="ngdialog-footer">
+        <button type="button" class="ngdialog-button" ng-click="addAsset()"><translate>Save</translate></button>
+        <button type="button" class="ngdialog-button" ng-click="closeAssetDialog()"><translate>Cancel</translate></button>
+    </div>
+
+</div>
+
+
+
+

@@ -1,0 +1,50 @@
+<div class="ngdialog-message" ng-init="init()" ng-controller="editNonManagedResourceApplianceController">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title"><translate>Edit Appliance</translate></span>
+    </div>
+    <div class="ngdailog-body" style="padding-left: 30px;">
+        <div class="control-group checkbox">
+            <label for="enableManagementSelection" style="width: 100%;">
+              <input type="checkbox" id="enableManagementSelection" ng-value="'enableManagementSelect'" 
+                     ng-model="enableManagementSelection"
+                     name="enableManagementSelection" style="margin-right: 10px;"
+                     ng-click="onEnableManagementSelectionChange();">
+                     <translate>Enable Management of this appliance</translate>
+           </label>
+        </div>
+        
+        <div class="control-group text" style="padding-left:25px;padding-right: 25px;">
+            <label for="txtuserName" width="100%"><translate>User Name</translate></label>
+                <input id="txtuserName" type="text" name="username" ng-model="strUsername" disabled="disabled"/>
+        </div>
+         <div class="errorMsg" 
+              ng-show="invalidUsername" style="padding-left: 25px;padding-top:10px;font-size:13px;"><translate>User Name Required</translate></div>
+        
+        <div class="control-group text" style="padding-left:25px;padding-right: 25px;">
+            <label for="txtpassword" width="100%"><translate>Password</translate></label>
+                <input id="txtpassword" type="password" name="password" ng-model="strPassword" disabled="disabled"/>
+        </div>
+        <div class="errorMsg" 
+              ng-show="invalidPassword" style="padding-left: 25px;padding-top:10px;font-size:13px;"><translate>Password Required</translate></div>
+        
+        <br/>
+        <div class="control-group text" style="padding-left:25px;padding-right: 25px; height: 35px;">
+            <label style="width:100%; white-space: normal; line-height: 20px;">
+                {{ngDialogData.appliancename}} <translate>is currently sending backup copies to</translate> {{selectedAppliance.storage_name}} <translate>storage</translate>
+            </label>
+        </div>
+        <div class="control-group checkbox">
+            <label for="suspendBackupSelection" style="width: 100%;" title="{{strtooltip}}">
+                <input type="checkbox" id="suspendBackupSelection" ng-checked="isSuspendBackupSelectionChecked"
+                       ng-model="isSuspendBackupSelectionChecked" ng-disabled="{{isDisabled}}"
+                        name="editAppliancecheckboxgroup" style="margin-right: 10px;"/>
+                    <translate>Suspend backup copies from</translate> {{ngDialogData.appliancename}}
+            </label>
+        </div>
+        <br/>
+    </div>
+    <div class="ngdialog-footer">
+        <button type="button" class="ngdialog-button" ng-click="editNonManagedAppliance()"><translate>Save</translate></button>
+        <button type="button" class="ngdialog-button" ng-click="closeThisDialog()"><translate>Cancel</translate></button>
+    </div>
+</div>

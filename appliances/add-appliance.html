@@ -1,0 +1,75 @@
+<div ng-app = "manage-appliance" ng-controller = "ManagedApplianceCtrl">
+
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title"><translate>Add Appliance</translate></span>
+    </div>
+
+    <form name = "applianceForm" ng-submit="submitForm()">
+        <div class="ngdailog-body" >
+
+                <div class="modal-form-box">
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_name"><translate>Name</translate></label>
+                            <input id="id_name" type="text" name="name" style="width:230px;" ng-model="appliance.name" maxlength="128" />
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition">
+                            <translate>The name of the Unitrends appliance you are going to manage.  The hostname of the manager appliance
+                            must be resolvable on the network from the managed appliance.</translate>
+                        </span>
+                    </div>
+
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_ip"><translate>IP Address</translate></label>
+                            <input id="id_ip" type="text" name="ip" style="width:230px;" ng-model="appliance.ip" maxlength="128" /></div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition">
+                           <translate> Optional, the IP address of the Unitrends appliance you are going to manage.  If not
+                            present, the name must be resolvable on the network.</translate>
+                        </span>
+                    </div>
+                    <div class="control-group text">
+                        <label for="id_username"><translate>Username</translate></label>
+                        <input type="text" name="username" id="id_username" style="width:230px;" ng-model = "appliance.username" />
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition">
+                          <translate>  An administrative username for the Unitrends appliance you are going to manage.</translate>
+                        </span>
+                    </div>
+                    <div class="control-group text">
+                        <label for="id_password"><translate>Password</translate></label>
+                        <input type="password" name="password" id="id_password" style="width:230px;" ng-model = "appliance.password" />
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition">
+                           <translate> An administrative password for the Unitrends appliance you are going to manage.</translate>
+                        </span>
+                    </div>
+                </div>
+
+            <footer id="bds-form-footer" class="modal-form-footer">
+                <div class="actions">
+                    <div class="inner">
+                        <button type="submit" class="btn"><translate>Save</translate></button>
+                        <button type="button" class="btn" ng-click="closeAddDialog()"><translate>Cancel</translate></button>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+
+        <div id="dialog-errors"><p class="summary error"></p>
+            <ul id="dialog-error-list" class="errorlist"></ul>
+        </div>
+    </form>
+</div>

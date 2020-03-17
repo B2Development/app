@@ -1,0 +1,36 @@
+<form name="editFromSourceForm" ng-submit="editTargetCredentials()" novalidate>
+    <div class="ngdialog-message" ng-controller="editFromSourceCtrl">
+        <div class="ngdialog-titlebar">
+            <span class="ngdialog-title" translate>Edit Backup Copy Target</span>
+        </div>
+        <div class="ngdailog-body">
+            <div class="control-group checkbox">
+                <label for="updateTargetCredentials" style="width: 100%;">
+                    <input type="checkbox" id="updateTargetCredentials" ng-value="'enableManagementSelect'"
+                           ng-model="updateTargetCredentials"
+                           name="updateTargetCredentials" style="margin-right: 10px;"
+                           ng-click="onEditCredentialsChange();">
+                    <translate>Edit Credentials for Target Appliance</translate>
+                </label>
+            </div>
+
+            <div class="control-group text" style="padding-left:25px;padding-right: 25px;">
+                <label for="txtuserName" width="100%" translate> User Name</label>
+                <input id="txtuserName" type="text" name="username" ng-model="strUsername" disabled="disabled"/>
+            </div>
+
+            <div class="control-group text" style="padding-left:25px;padding-right: 25px;">
+                <label for="txtpassword" width="100%" translate>Password</label>
+                <input id="txtpassword" type="password" name="password" ng-model="strPassword" disabled="disabled"/>
+            </div>
+
+            <div id="dialog-errors"><p class="summary error"></p>
+                <ul id="dialog-error-list" class="errorlist"></ul>
+            </div>
+        </div>
+        <div class="ngdialog-footer">
+            <button type="button" class="ngdialog-button" ng-click="editTargetCredentials()" translate>Save</button>
+            <button type="button" class="ngdialog-button" ng-click="closeThisDialog()" translate>Cancel</button>
+        </div>
+    </div>
+</form>

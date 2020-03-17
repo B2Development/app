@@ -1,0 +1,50 @@
+<div class="ngdialog-titlebar">
+    <span class="ngdialog-title"><translate>Add Backup Copy Target - Unitrends Cloud</translate></span>
+</div>
+
+<div class="dailog-body">
+
+    <div class="replicationTarget-mainWizard" id="unitrendsCloudForm" ng-form='formName.addressForm'>
+        <div class="replication-addTarget-inputDiv">
+            <span><translate>Copy and paste your Unitrends Cloud authorization code below</translate></span>
+            <textarea style="margin:1.2em; height:65px; width: 350px;max-width: 350px;font-size:12px;"
+                      ng-model="addressFormData.replicationTarget_cloudAdress" name="replicationTarget_cloudAdress"
+                      type="text" required/>
+            <div class="errorMsg" ng-show="submitted && formName.addressForm.replicationTarget_cloudAdress.$invalid">
+                <translate>Enter Unitrends Cloud authorization code</translate>
+            </div>
+        </div>
+
+        <div class="cloudAccountText" style="padding-top:2px;">
+            <translate>Don't have a Unitrends Cloud Account?</translate>
+            <span id="acctTextId" style="padding:10px;cursor:pointer;" class="reportExpand"
+                  ng-click="expandAcctText();"></span></div>
+
+        <div ng-show="expandText" class="cloudAccountText" style="padding-top:0px;">
+            <translate>Unitrends Cloud provides disaster recovery services including long-term retention, large-scale
+                data recovery, and the ability to quickly spin up a protected machine after an outage.
+            </translate>
+            <br><br>
+
+            <Translate> To learn more, refer to the</Translate>
+            <a href="http://www.unitrends.com" target="_blank">
+                <translate>Unitrends web site</translate>
+            </a>
+            <translate>or</translate>
+            <a href="http://www.unitrends.com/company/contact" target="_blank">
+                <translate>contact Unitrends</translate>
+            </a>
+            <translate>to get started.</translate>
+        </div>
+    </div>
+
+</div>
+<div class="ngdialog-footer">
+    <div class="hrForTarget">
+        <div class="rightwz"><input class="ngdialog-button" type="submit" value="&nbsp; Cancel &nbsp;"
+                                    ng-click="closeThisDialog()"/></div>
+        <div class="rightwz"><input id="saveUnitrendsCloudBtn" class="btn" type="submit" value="&nbsp; Submit &nbsp;"
+                                    ng-click="submitted=true;addUnitrendsCloundTarget();"/></div>
+    </div>
+</div>
+   

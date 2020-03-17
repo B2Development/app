@@ -1,0 +1,131 @@
+<div ng-controller="BackupCopyApplianceCtrl">
+
+<form id="advanced-backupcopy-edit-form" action="/api/systems/">
+    <section class="modal-form-content" style="position:inherit;margin-top:8px;">
+        <div class="modal-form-box advanced-backupcopy-settings-openvpn">
+            <h3 translate>Backup Copy</h3>
+            <div class="control-group checkbox">
+                <label for="optimizedBackupcopySelection" style="width: 100%;">
+                    <input type="checkbox" id="optimizedBackupcopySelection" value=""
+                           name="optimizedbackupcopygroup" style="margin-right: 10px;">
+                    <translate>Enable this appliance as a Backup Copy Target</translate>
+                </label>
+            </div>
+            <div class="control-row" style="margin-left: 25px;">
+                <div class="control-group text wider-label" style="width: calc(100% - 300px);">
+                    <label for="txtSecureNetwork"><translate>Secure Network</translate></label>
+                    <input id="txtSecureNetwork" type="text" name="secure_network" maxlength="128" placeholder="172.17.3.0" />
+                </div>
+                <div class="help-trigger" style="display: flex;">
+                    <span class="help-trigger"><i class="icon-questionsign"></i></span>
+
+                    <span class="help-trigger"><i class="tooltip tooltipstered icon-warningsign severity-icon"
+                                                  title="{{backupCopyWarningTooltip}}" data-html="true"></i></span>
+                </div>
+                <span class="definition">
+                    <translate>The network must end in zero. The default value is 172.17.3.0.</translate>
+                </span>
+            </div>
+            <div class="control-row" style="margin-left: 25px;">
+                <div class="control-group text wider-label" style="width: calc(100% - 300px);">
+                    <label for="txtSecureNetmask"><translate>Secure Netmask</translate></label>
+                    <input id="txtSecureNetmask" type="text" name="secure_netmask" maxlength="128" placeholder="255.255.255.0" />
+                </div>
+                <div class="help-trigger">
+                    <i class="icon-questionsign"></i>
+                </div>
+                <span class="definition">
+                    <translate>The default value is 255.255.255.0.</translate>
+                </span>
+            </div>
+            <div class="control-row" style="margin-left: 25px;">
+                <div class="control-group spinner-group">
+                    <label style="width:160px" for="securePortSelection"><translate>Secure Port</translate></label>
+                    <input id="securePortSelection" style="width:100px" type="text"
+                           name="secure_port" data-itemtype="number" value="1194" size="4" class="retention-int" />
+                </div>
+                <div class="help-trigger">
+                    <i class="icon-questionsign"></i>
+                </div>
+                <span class="definition">
+                    <translate>Port number (default 1194)</translate>
+                </span>
+            </div>
+            <br/>
+            <div class="control-row" style="margin-left: 25px;">
+                <label style="width: 100%;line-height: 20px;color:#669dcd;"><translate>Note: A secure connection can be established only once. Ensure these settings are correct before saving.</translate>
+                </label>
+            </div>
+        </div>
+
+        <!--Start : backup copy div-->
+        <div class="modal-form-box advanced-backupcopy-settings-config" hidden>
+            <h3><translate>Backup Copy Source</translate></h3>
+            <div class="control-row" style="margin-left: 25px;">
+                <div class="control-group spinner-group">
+                    <label for="spinMaxBackupCopies" style="width:220px;" translate>Max concurrent backup copies</label>
+                    <input id="spinMaxBackupCopies" style="width:100px" type="text" 
+                           name="concurrent_backup_copies" data-itemtype="number" value="0" size="4"/>  
+                </div>
+                <div class="help-trigger">
+                    <i class="icon-questionsign"></i>
+                </div>
+                <span class="definition">
+                    <translate>Sets the number of backup copies allowed at once</translate>
+                </span>
+            </div>
+            <div class="control-row" style="margin-left: 25px;">
+                <div class="control-group select">
+                    <label for="dropdownQueueScheme" style="width:220px;" translate>Queue Scheme</label>
+                    <select id="dropdownQueueScheme" name="queue_scheme" 
+                            class="filter-type filter-select"  style="width: 210px;margin-left: 0px;">
+                        <option value="0">Manual</option>
+                        <option value="1" translate>Maximize Retention</option>
+                        <option value="2" translate>Recency</option>
+                    </select>
+                </div>
+                <div class="help-trigger">
+                    <i class="icon-questionsign"></i>
+                </div>
+                <span class="definition">
+                    <translate>Maximize Retention will copy all backups to the target, while Recency will copy the most recent backup group.</translate>
+                </span>
+            </div>
+            <div class="control-row checkbox" style="margin-left: 25px;">
+                <label for="suspendBackupSelection" style="width: 100%;" title="Suspend or Resume backup copies to the target.">
+                    <input type="checkbox" id="suspendBackupSelection"
+                           name="editAppliancecheckboxgroup" style="margin-right: 10px;"/>
+                    <translate>Suspend backup copies from this appliance</translate>
+                </label>
+            </div>
+            <div class="control-row" style="margin-left: 25px;">
+                <button class="btn btn-restart-replication" type="button"><translate>Reset Backup Copy</translate></button>
+            </div>
+        </div>
+        
+    </section>
+    <footer id="advanced-backupcopy-edit-form-footer" class="modal-form-footer">
+        <div class="actions">
+            <div class="inner">
+                <button id="btnSave" type="button" type="submit" class="btn"><translate>Save</translate></button>
+                <button type="button" data-action="cancel" class="btn"><translate>Cancel</translate></button>
+            </div>
+        </div>
+    </footer>
+    <div id="dialog-errors" class="advanced-backupcopy-dialog-errors">
+        <p class="summary error"></p>
+        <ul id="dialog-error-list" class="errorlist advanced-backupcopy-dialog-error-list"></ul>
+    </div>
+</form>
+</div>
+
+<style>
+    .tooltip {
+        font-size: 1.2em;
+        line-height: 1.4;
+        opacity: 1;
+        position: initial;
+        visibility: visible;
+        z-index: 1030;
+    }
+</style>

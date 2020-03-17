@@ -1,0 +1,70 @@
+.replicationTarget-mainWizard{
+	margin:20px;
+}
+
+.replication-addTarget-title{
+ font-size:13px;
+ font-weight:bold;
+}
+
+.replication-addTarget-radioBtnDiv{
+  width:50em;
+  padding:10px;
+}
+
+.replication-addTarget-radioBtnDiv > span{
+  font-size:12px;
+  padding-left:5px;
+}
+
+.replication-addTarget-inputDiv{
+ width:50em;
+ padding:10px;
+
+}
+.replication-addTarget-inputDiv > span{
+ font-size:13px;
+ padding-left:15px;
+ padding-right:15px;
+ 
+}
+
+.replication-addTarget-inputDiv > input{
+ width:220px;
+ 
+}
+.replicationGridStyle {
+  border: 1px solid rgb(212, 212, 212);
+  height: 13em;
+  margin-left: 3em;
+  margin-top: 1.5em;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 38.5em;
+}
+
+.noDatFoundTextDiv {
+  font-size: 1.2em;
+  left: 0;
+  opacity: 0.25;
+  position: absolute;
+  text-align: center;
+  top: 125px;
+  width: 100%;
+  z-index: 1000;
+}
+
+.cloudAccountText{
+	padding:15px;
+	font-size:12px;
+	margin-left: 10px;
+	
+}
+.errorMsg{
+	padding-left:15px;
+	font-size:12px;
+	color:red;
+}
+.hrForTarget{
+	border-bottom: 1px solid #ddd;
+}

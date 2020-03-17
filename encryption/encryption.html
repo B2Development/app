@@ -1,0 +1,70 @@
+<div ng-controller="AdvancedCtrl">
+
+<form id="encryption-edit-form" action="/api/encryption">
+    <section class="modal-form-content" style="position:inherit;margin-top:8px;">
+        <div class="modal-form-box encryption-settings">
+
+            <h3><translate>Encryption Settings</translate></h3>
+
+            <div class="modal-form-no-box" style="margin-bottom:0;padding-top:2px">
+                <div class="control-group checkbox" style="margin:5px 0 0 0">
+                    <label for="id_enable_encryption"><input type="checkbox" name="enable_encryption" id="id_enable_encryption" /><translate>Enable Encryption</translate>
+                    </label>
+                </div>
+
+                <div id="encryption_passphrase_not_set">
+                    <div class="control-group text">
+                        <label for="id_encryption_passphrase"><translate>Passphrase</translate></label>
+                        <input disabled="disabled" id="id_encryption_passphrase" type="password" name="encryption_passphrase" maxlength="1024" />
+                    </div>
+                    <div class="control-group text">
+                        <label for="id_confirm_passphrase"><translate>Confirm Passphrase</translate></label>
+                        <input disabled="disabled" id="id_confirm_passphrase" type="password" name="encryption_confirm_passphrase" maxlength="1024" />
+                    </div>
+                </div>
+
+                <div id="encryption_passphrase_set">
+                    <div class="control-group text">
+                        <label for="id_current_passphrase"><translate>Current Passphrase</translate></label>
+                        <input disabled="disabled" id="id_current_passphrase" type="password" name="current_passphrase" maxlength="1024" />
+                    </div>
+                    <div class="control-group checkbox" style="margin:5px 0 0 0">
+                        <label for="id_change_passphrase" style="width: 200px;"><input type="checkbox" name="change_passphrase" id="id_change_passphrase" /><translate>Change Passphrase</translate>
+                        </label>
+                    </div>
+                    <div class="control-group text">
+                        <label for="id_encryption_passphrase_change"><translate>New Passphrase</translate></label>
+                        <input disabled="disabled" id="id_encryption_passphrase_change" type="password" name="encryption_passphrase_change" maxlength="1024" />
+                    </div>
+                    <div class="control-group text">
+                        <label for="id_confirm_passphrase_change"><translate>Confirm New Passphrase</translate></label>
+                        <input disabled="disabled" id="id_confirm_passphrase_change" type="password" name="encryption_confirm_passphrase_change" maxlength="1024" />
+                    </div>
+                    <a href="#" style="font-size:1.2em" class="btn-save-master-key"><translate>Save Master Key File</translate></a>
+                </div>
+            </div>
+        </div>
+
+        <div id="san-direct-details" class="modal-form-box clearfix" style="height:200px;margin-bottom:0" hidden>
+            <h3 translate>SAN Direct Details</h3>
+        </div>
+    </section>
+
+    <p></p>
+    <footer id="encryption-form-footer" class="modal-form-footer">
+        <div class="actions">
+            <div class="inner">
+                <button id="btnAdvancedToolbox" type="button" class="btn" style="float:left"><translate>Support Toolbox</translate></button>
+                <button id="btnAdvancedSettings" type="button" class="btn" style="float:left"><translate>General Configuration</translate></button>
+                <button id="btnOSPassword" type="button" class="btn" style="float:left"><translate>OS Password</translate></button>
+                <button id="btniscsiCHAP" type="button" class="btn" style="float:left"><translate>iSCSI CHAP</translate></button>
+                <button id="btnSNMP" type="button" class="btn" style="float:left"><translate>SNMP</translate></button>
+                <button id="btnReplicaConfig" type="button" class="btn" style="float:left"><translate>VM Replicas</translate></button>
+                <button type="button" data-action="submit" class="btn"><translate>Save</translate></button>
+                <button type="button" data-action="cancel" class="btn"><translate>Cancel</translate></button>
+            </div>
+        </div>
+    </footer>
+    <div id="dialog-errors" class="encryption-dialog-errors"><p class="summary error"></p><ul id="dialog-error-list" class="errorlist encryption-dialog-error-list"></ul></div>
+</form>
+</div>

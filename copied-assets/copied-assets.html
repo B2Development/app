@@ -1,0 +1,109 @@
+<div class="environment full-height" ng-controller="CopiedAssetsCtrl">
+
+    <header class="environment-header clearfix">
+
+        <nav class="button-bar">
+            <ul>
+                <li ng-hide="true">
+                    <a class="settings-edit" ng-click="toggleView()">
+                        <i class="icon-thlarge icon-large"></i> <translate>View: </translate>{{getView()}}</a>
+                </li>
+                <li class="btn-group-display dropdown-menu">
+                    <a class="btn-show-display" ng-hide="isCE">
+                        <i class="icon-tablet icon-large"></i> <translate>Display</translate><span> {{getDisplay() | translate}}</span>
+                        <span class="dropdown-menu-expand">&#9662;</span>
+                    </a>
+                    <ul>
+                        <li><a href="" ng-click="displayAll()"> <translate>All Assets</translate> </a></li>
+                        <li><a href="" ng-click="displayVirtual()"> <translate>Virtual Assets</translate> </a></li>
+                        <li><a href="" ng-click="displayPhysical()"> <translate>Physical Assets</translate> </a></li>
+                    </ul>
+                </li>
+                <li class="separator"></li>
+                <li>
+                    <a class="settings-edit-assets" ng-click="launchAssetManager(0)">
+                        <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                </li>
+                <li>
+                    <a class="settings-edit" ng-click="deleteAssetConfirmationDialog()">
+                        <i class="icon-removecircle icon-large"></i> <translate>Remove</translate> </a>
+                </li>
+                <li class="separator"></li>
+                <li ng-hide="isCE">
+                    <a class="settings-edit btn-edit-retention" ng-click="launchRetentionManager()">
+                        <i class="icon-thlist icon-large"></i> <translate>Manage Retention</translate> </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section class="environment-assets" ng-show="tableView" style="overflow-y:hidden">
+        <article id="assets-table-container" class="assets-list">
+            <div  ui-grid="treeGridOptions"
+                  ui-grid-tree-view
+                  ui-grid-selection
+                  ui-grid-resize-columns
+                  ui-grid-move-columns
+                  ui-grid-auto-resize
+                  ui-grid-save-state
+                  class="assets-tree gridStyle ui-grid-viewport"
+                  style="position:absolute;top:0;left:0;bottom:0;right:0;margin-bottom:10px;height:100%;font-size:12px;overflow-x:hidden;overflow-y:hidden">
+            </div>
+        </article>
+    </section>
+    
+    <!--display : Icon view-->
+    <section class="environment-assets" ng-show="!tableView">
+        <div class="configure-appliances-list">
+            <div id="{{protectedAssets.id}}" class="appliance-list-block clickable" ng-repeat="protectedAssets in protectedAssetsDataArr"
+                 ng-click="selectProtectedAssetsFromList(protectedAssets.id)"
+                 style="width:100%;margin-bottom:10px;">
+                <span class="appliance-heading">{{protectedAssets.name}}</span>
+                <br/>
+                <br/>
+                <article style="width:100%;">
+                    <img src="assets/images/favicon.ico" height="20" width="20">
+                    <span class="appliance-heading" 
+                          style="font-size:14px;margin-left:10px;font-weight:normal;">{{protectedAssets.asset_type}}</span>
+                </article>
+            </div>
+        </div>
+        <div class="configure-appliances-list-detailbox">
+            <div class="appliance-list-detail-block">
+                <table style="width:100%;float:left;line-height:3;height: 100%;">
+                    <tr>
+                        <th style="width:30%; text-align:left;">
+                            <span class="appliance-heading" style="font-size:24px;">{{selectedAssets.name}}</span>
+                        </th>
+                        <th style="width:45%; word-spacing: 30px;text-align:left;font-size:1.5em;margin-top:15px;">
+                            <i title="Enabled" class="icon-phd-active icon-large text-standard" ng-show="selectedAssets.is_enabled"></i>
+                            <i title="Synchable" class="icon-phd-replicate icon-large text-standard" 
+                               ng-show="selectedAssets.is_synchable"></i>
+                            <i title="Encryption" class="icon-security icon-large text-standard" ng-show="selectedAssets.is_encrypted"></i>
+                        </th>
+                        <th style="width:25%;"></th>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;">
+                            <span class="appliance-heading"
+                                  style="float:none;font-weight:normal;padding-right:10px;"><translate>IP Address:</translate></span>
+                            <span class="appliance-heading" style="font-weight:bold;">
+                                {{selectedAssets.ip}}</span>
+                        </td>
+                        <td style="text-align:left; overflow-y: auto;height: 75px;">
+                           <span class="appliance-heading"
+                                  style="float:none;font-weight:normal;"><translate>Description:</translate></span>
+                            <span class="appliance-heading"
+                                  style="float:none;font-weight:bold;">{{selectedAssets.system_name}}</span>
+                        </td>
+                        <td style="float:right; margin-right: 12px; padding-top:10px;">
+                           <span class="appliance-heading"
+                                  style="font-weight:normal;"><translate>Version:</translate></span>
+                            <span class="appliance-heading"
+                                  style="font-weight:bold;">{{selectedAssets.version | limitTo:3 }}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

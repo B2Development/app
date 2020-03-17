@@ -1,0 +1,87 @@
+<div ng-controller="LicenseCtrl">
+
+<form id="license-edit-form" action="/api/license">
+    <section class="modal-form-content" style="position:inherit;margin-top:8px;" id = "license_info">
+        <div class="modal-form-box ">
+            <h3><translate>License Details</translate></h3>
+            <div class="modal-form-no-box">
+                <div class="control-group text" style="height: 20px">
+                    <label for="asset_tag"><translate>Asset Tag</translate></label>
+                    <label  id="asset_tag" name="asset_tag" style="width: auto" ></label>
+                </div>
+               <br>
+                <div class="control-group text" style="height: 20px">
+                    <label for="license_name"><translate>License</translate></label>
+                    <label id="license_name" name="license" style="width: auto"></label>
+                </div>
+
+                <div class="control-group text" style="height: 20px">
+                    <label for="install_date"><translate>Install Date</translate></label>
+                    <label id="install_date" name="install_date" style="width: auto"></label>
+                </div>
+                <div class="control-group text" style="height: 20px">
+                    <label for="expires"><translate>Expires</translate></label>
+                    <label  name="expires" id="expires" style="width: auto"></label>
+                </div>
+                <br>
+                <div class="control-group text" style="height: 20px">
+                    <label for="feature_description"><translate>Feature Description</translate></label>
+                    <label id="feature_description" name="feature_description" style="width: auto" ></label>
+                </div>
+                <div class="control-group text" style="height: 20px">
+                    <label for="feature_string"><translate>Feature String</translate></label>
+                    <label id="feature_string" name="feature_string" style="width: auto" ></label>
+                </div>
+                <div class="control-group text" style="height: 20px">
+                    <label for="license_key"><translate>License Key</translate></label>
+                    <label id="license_key" name="license_key" style="width: auto" ></label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-form-no-box text hidden " id = "update_license">
+        <div class="control-group text">
+            <label for="license_key_entered"><translate>License Key</translate></label>
+            <input id="license_key_entered" name="license_key_entered" />
+        </div>
+        <div class="control-row">
+            <div class="control-group datepicker" style="display: inline-flex;">
+                <label for="expiration_date" style="width:120px;"><translate>Expiration Date</translate></label>
+                <div class="datepicker-control">
+                    <input type="text" id="expiration_date"
+                           name="expiration_date" class="filter-date">
+                </div>
+            </div>
+            <a style="cursor: pointer;line-height: 30px ;margin-left: 10px" id = "clear_date" ><translate>Clear Date</translate></a>
+            <div class="help-trigger">
+                <i class="icon-questionsign"></i>
+            </div>
+            <span class="definition">
+                <translate>Leave the field blank when expiration date is never</translate>
+            </span>
+        </div>
+        <div class="control-group text">
+            <label for="feature_string_entered"><translate>Feature String</translate></label>
+            <input id="feature_string_entered" name="feature_string_entered"/>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn pull-left btn-upgrade-license" type="button" style="margin-left: 15px"> <translate>Update</translate> </button>
+        <button class="btn pull-left btn-view-license-resources" type="button" style="margin-left: 15px"> <translate>Resources</translate> </button>
+        <button class="btn pull-right btn-add-license-info" type="button" style="margin-right: 15px"><translate>Add License Info</translate></button>
+    </div>
+
+    <p></p>
+    <footer id="license-form-footer" class="modal-form-footer">
+        <div class="actions">
+            <div class="inner">
+                <button type="button" data-action="submit" class="btn"><translate>Save</translate></button>
+                <button type="button" data-action="cancel" class="btn"><translate>Cancel</translate></button>
+            </div>
+        </div>
+    </footer>
+    <div id="dialog-errors" class="license-dialog-errors"><p class="summary error"></p><ul id="dialog-error-list" class="license-dialog-error-list"></ul></div>
+</form>
+</div>

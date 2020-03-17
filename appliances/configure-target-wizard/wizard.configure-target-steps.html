@@ -1,0 +1,21 @@
+
+<wizard flag = "false" on-finish="finishedWizard()" on-next="nextWizard()" style="position:relative;">
+<!-- STEP 1 -->
+<wz-step heading="Configure Target Type">
+	<div ng-include="'app/configure/appliances/configure-target-wizard/wizard.configure-target-type.html'"></div>
+	<div class="hralign">
+		<div class="rightwz"><input class="btn" type="submit" value="&nbsp; Cancel &nbsp;" ng-click="closeThisDialog()"/></div>
+        <div class="rightwz"><input class="btn" type="submit" wz-next value="&nbsp; Next &nbsp;" ng-click="submitted=true" /></div>
+	</div>
+</wz-step>
+<!-- STEP 2 -->
+<wz-step heading="Configure Target">
+	<div ng-include="'app/configure/appliances/configure-target-wizard/wizard.configure-target.html'"></div>
+	<div class="hralign">
+        <div class="rightwz"><input class="ngdialog-button" type="submit" value="&nbsp; Cancel &nbsp;" ng-click="closeThisDialog()"/></div>
+        <div class="rightwz"><input id="saveWizardBtn" class="btn" type="submit" wz-next value="&nbsp; Submit &nbsp;" ng-click="submitted=true"/></div>
+        <div class="rightwz"><input class="btn" type="submit" wz-previous value="&nbsp; Previous &nbsp;"/></div>
+   </div>
+</wz-step>
+</wizard>
+

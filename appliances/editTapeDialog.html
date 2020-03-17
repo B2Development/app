@@ -1,0 +1,79 @@
+<div id="editTapeDialogId" class="tabs-wrapper ui-tabs" ng-controller="AppliancesCtrl">
+
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title" id="title"><translate>Edit Tape Backup Copy Target</translate></span>
+    </div>
+
+    <form name="editTapeDialogForm" id="editTapeDialogForm" novalidate>
+        <div class="ngdailog-body">
+            <div style="margin:5px;">
+                <div class="control-group text">
+                    <label for="editTapeName"> <translate>Name</translate>: </label>
+                    <input style="margin-left: 0;" id="editTapeName" class="selectable-input-readonly" disabled="disabled" ng-model="selectedTarget.name"/>
+
+                </div>
+                <div class="control-group text" >
+                    <label class="label"> <translate>Serial Number</translate>: </label>
+                    <label class="label">{{selectedTarget.serial}} </label>
+                </div>
+            </div>
+
+
+            <div style="margin:5px;">
+                <fieldset style="margin-top:5px;">
+                    <legend><span
+                            style="color:#39424a;font-size:12px;font-weight:bold;height:500px;text-transform:uppercase;"><translate>Settings</translate></span>
+                    </legend>
+
+                    <div class="control-group select">
+                        <label for="connectionType" style="width:175px;"><translate>Parent Changer</translate></label>
+
+
+                        <select id="connectionType" style="width:200px;" ng-model="parentChangerModel"
+                                ng-options="parentChanger for parentChanger in parentchangerChangerArray"/>
+                        <div class="help-trigger" ng-click="showTooltipForEditTape()">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition" id="parent_changer_tooltip"><translate>Name of the autochanger device that holds this tape drive.</translate></span>
+                    </div>
+
+                    <div class="control-group text">
+                        <label for="parentChangerDriveNumber" style="width:175px;"><translate>Parent Changer Drive</translate>
+                            Number</label>
+                        <input id="parentChangerDriveNumber" type="text" style="width:200px;"
+                               ng-model="parentchangerDriver"
+                               name="name"/>
+                        <div class="help-trigger" ng-click="showTooltipForEditTape()">
+                            <i class="icon-questionsign"></i>
+                            <span class="definition" id="parent_changer_driver_tooltip"><translate>Drive number of this drive in the autochanger. Example: 0 or 1.</translate></span>
+                        </div>
+
+
+                    </div>
+                    <div class="control-group checkbox">
+                        <input type="checkbox" name="unlabelledCheck" ng-model="unlabelledCheck"
+                                id="unlabelledCheck"/>
+                        <label style="overflow: visible" for="unlabelledCheck"><translate>Use Unlabeled Tapes</translate></label>
+
+                        <div class="help-trigger" ng-click="showTooltipForEditTape()">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Select to allow the use of unlabeled tapes.</translate></span>
+                    </div>
+                    <!--</div>-->
+                </fieldset>
+            </div>
+
+            <footer id="bds-form-footer" class="modal-form-footer">
+                <div class="actions">
+                    <div class="inner">
+                        <button type="submit" data-action="submit" class="btn" ng-click="saveTapeSettings()"><translate>Save</translate>
+                        </button>
+                        <button type="button" data-action="cancel" class="btn" ng-click="closeEditTapeDialog()"><translate>Cancel</translate>
+                        </button>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </form>
+</div>

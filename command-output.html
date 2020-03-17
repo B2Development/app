@@ -1,0 +1,14 @@
+<div>
+    <div class="ngdialog-titlebar">
+    <span style="text-transform:capitalize;" class="ngdialog-title">{{outputTitle}}</span>
+    </div>
+    <div class="ngdailog-body" style="display:block;overflow-y:auto;overflow-x:hidden;border:1px solid #ddd;"
+         ng-style="(updatesOutput) ? {'height':'275px'} : {'height':'400px'}">
+       <span style="vertical-align: middle;display: table-cell;">
+           <div style="font:12px monospace;padding-left:10px;display: table-cell;white-space:pre-wrap">{{outputData}}</div>
+       </span>
+    </div>
+    <div class="ngdialog-footer">
+        <button type="button" class="ngdialog-button" ng-click="onConfirmOkButtonClick()"><translate>Close</translate></button>
+    </div>
+</div>

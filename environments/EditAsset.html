@@ -1,0 +1,208 @@
+<div class="ngdialog-message" ng-controller="EditServerCtrl">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title" id="edit-asset-dialog-title">Edit Asset</span>
+    </div>
+    <div class="ngdailog-body" style="padding: 5px;margin-bottom: 0;">
+        <form name="EditServerForm" id="config-server-dialog" ng-submit="editAsset()" novalidate>
+
+            <div style="display:none;" id="edit_object_id">none</div>
+
+            <div ng-hide="grandClient">
+            <div class="dialog-common-label" id="common_dialog_label">
+                <label>
+                    <translate>Edit settings for</translate> <translate>{{assets.name}}.</translate>
+                </label>
+            </div>
+            </div>
+
+                <div class="modal-form-box" style="top: 10px;">
+                    <h3><translate>Details</translate></h3>
+                    <div class="control-row">
+                        <div class="control-group select">
+                            <label for="id_system"><translate>Appliance</translate></label>
+                            <select name="system" id="id_system" style="width: 230px" disabled></select>
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_server"><translate>Asset Name</translate></label>
+                            <input type="text" name="name" id="id_server" style="width: 230px" />
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition" id = "host_name_tooltip">
+                            <translate>The name of the server</translate>.
+                        </span>
+                    </div>
+                    <div class="control-row" style="margin: 0px;">
+                        <div class="control-group text">
+                            <label for="id_ip"><translate>IP Address</translate></label>
+                            <input id="id_ip" type="text" name="ip" maxlength="128" style="width: 230px"/>
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition" id="ip_address_tooltip">
+                            <translate>Enter either the IP address or a resolvable hostname of this</translate> <translate>Asset</translate>.
+                        </span>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_encrypted"><translate>Encrypt Backups</translate></label>
+                            <select ng-model='encryption_strategy' name="encryption_options"   style="margin-left: 10px"  id="id_encrypted">
+                                <option value="none" ><translate>Do not encrypt any backups for this server or its assets</translate></option>
+                                <option value="not-top-level" ><translate>Do not encrypt the agent-based backups for this server</translate></option>
+                                <option value="top-level"><translate>Encrypt the agent-based backups for this server</translate></option>
+                                <option value="all"><translate>Encrypt all of the backups for this server and its assets</translate></option>
+                            </select>
+                            <div class="help-trigger">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition">
+                                <translate>Selecting "Encrypt the agent-based backups for this server" will encrypt the agent-based backups for this server,
+                                    but it ignores the current encryption setting for individual assets on this server (VMs, databases, etc.).</translate>
+                                <br>
+                                <translate>To encrypt backups for individual assets on this server: select them in the Protected Assets tab and click Edit
+                                    or select "Encrypt all of the backups for this server and its assets".</translate>
+                                <br>
+                                <translate>Selecting "Do not encrypt agent-based backups for this server" will ignore the current encryption setting for individual assets on this server</translate>;
+                                <translate>selecting "Do not encrypt any backups for this server" will unset encryption for all of the individual assets on this server.</translate>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-form-box" id="id_CredentialsDiv" style="top: 10px;">
+                    <h3><translate>Credentials</translate></h3>
+                    <div class="control-row">
+                        <div class="control-group select">
+                            <label for="credential_id"><translate>Credentials</translate></label>
+                            <select name="credential_id" class="credentials-selection-list" id="credential_id" style="min-width:80px;width: 230px" />
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Administrative credentials</translate>.</span>
+                        <span class="btn-manage-credential" style="margin-left: 10px;">
+                            <a class="settings-edit" ng-click="launchCredentialManager()">
+                                <i class="icon-gears icon-large" style="margin-right: 10px;"></i><translate>Manage Credentials</translate></a>
+                        </span>
+                    </div>
+                    <div class="modal-form-credential">
+                        <div class="control-row">
+                            <div class="control-group text">
+                                <label for="id_credentials_displayName"><translate>Credential Name</translate></label>
+                                <input type="text" name="display_name" id="id_credentials_displayName" ng-model="credential.name" required style="width: 230px" />
+                            </div>
+                            <div class="help-trigger">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition"><translate>Display name of credential</translate>.</span>
+                        </div>
+                        <div class="control-row">
+                            <div class="control-group text">
+                                <label for="id_credentials_username"><translate>Username</translate></label>
+                                <input type="text" name="user_name" id="id_credentials_username" ng-model="credential.username" required style="width: 230px"/>
+                            </div>
+                            <div class="help-trigger">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition"><translate>Include a username with administrator credentials</translate>.</span>
+                        </div>
+                        <div class="control-row">
+                            <div class="control-group text">
+                                <label for="id_credentials_password"><translate>Password</translate></label>
+                                <input type="password" name="password" id="id_credentials_password" style="width: 230px"/>
+                            </div>
+                            <div class="help-trigger">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition"><translate>Include a password with administrator credentials</translate>.</span>
+                        </div>
+                        <div class="control-row" style="margin-bottom: -10px;">
+                            <div class="control-group text">
+                                <label for="id_domain"><translate>Domain (Optional)</translate></label>
+                                <input type="text" name="domain" id="id_domain"  style="width: 230px"/>
+                            </div>
+                        </div>
+                        <div class="control-row">
+                            <div class="control-group checkbox" style="margin-bottom: -20px;">
+                                <label for="id_default">
+                                    <input type="checkbox" name="is_default" id="id_default" />
+                                    <translate>Set as default</translate>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-form-box" id="retentionSection" style="top: 10px;">
+                    <h3><translate>Retention</translate></h3>
+                    <div class="control-row">
+                      <div class="control-group select">
+                        <div class="control-group text">
+                            <label for="id_retentionPolicy"><translate>Retention Policy</translate></label>
+                            <select name="id_retentionPolicy" class="retentionPolicyList" id="id_retentionPolicy" style="min-width:80px; width:230px" ng-model="selectedRetention"
+                                    ng-change="onChangePolicy()"
+                                    ng-options="{{assetList.retention}}">
+
+                            </select>
+
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+
+                        <span class="definition">Select retention policy.</span>
+
+                        <span id="id-retention-definition" class="definition"><translate>Click Manage Retention to update the retention policy</translate>.</span>
+                        <span ng-show="showRetention" class="btn-manage-credential">
+                            <a class="settings-edit" ng-click="launchRetentionManager()">
+                                <i class="icon-gears icon-large"></i>&nbsp;&nbsp;<translate>Manage Retention</translate></a>
+                        </span>
+                        <span ng-show="!showRetention" class="btn-manage-credential">
+                            <a href><i class="icon-bancircle icon-large"></i>&nbsp;&nbsp;Cannot be Changed</a>
+                        </span>
+                    </div>
+                      </div>
+                </div>
+
+            <div ng-show="supportsBlock" class="control-group checkbox" style="margin:5px 0 10px 10px">
+                <label for="id_enable_block">
+                    <input type="checkbox" name="enable_block" id="id_enable_block"
+                           ng-model="showVssAppAwareBox" ng-checked="showVssAppAwareBox" />
+                    <translate>Show Image Level Backup Settings</translate>
+                </label>
+            </div>
+            <div class="modal-form-box" ng-show="showVssAppAwareBox" style="margin-bottom:0">
+                <h3>Application Settings</h3>
+                <div class="control-row">
+                    <div class="control-group checkbox">
+                        <label for="id_vss_app_aware_checkbox" style="width: 100%;">
+                            <input type="checkbox" id="id_vss_app_aware_checkbox" ng-model="allowExchangeBackups_vssAppAwareStrategy"
+                                   name="vss_app_aware_options" style="margin-right:10px;">
+                            Allow granular application backups? (not recommended)
+                        </label>
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition">
+                                Selecting this option will allow application backups to
+                                be scheduled for this asset. Leaving this box unchecked will
+                                prevent application backups from being scheduled
+                                and will perform image level backups only.
+                            </span>
+                </div>
+            </div>
+            <div id="dialog-errors">
+                <p class="summary error"></p>
+                <ul id="dialog-error-list" class="errorlist"></ul>
+            </div>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+         <button id="id_btnSaveAsset" type="submit" class="ngdialog-button" ng-click="editAsset()"><translate>Save</translate></button>
+         <button type="button" class="ngdialog-button" ng-click="closeAssetDialog()"><translate>Cancel</translate></button>
+    </div>
+</div>

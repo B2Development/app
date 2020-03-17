@@ -1,0 +1,208 @@
+<div class="ngdialog-message" ng-controller="EditServerCtrl">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title" id="edit-assets-dialog-title">Edit Assets</span>
+    </div>
+
+    <div class="ngdialog-body">
+
+        <form name="EditMultipleAssetsForm" id="config-server-dialog" ng-submit="editMultipleAssets()" novalidate>
+
+        <div class="environment full-height" >
+            <div style="display:none;" id="edit_object_id">none</div>
+            <div class="dialog-common-label" id="common_dialog_label">
+                <label id="id_description" style="margin-left: 12px;">Edit settings for {{assets.length}} assets.</label>
+            </div>
+            <div class = "modal-form-box hidden" id = "details_box_multiple_assets">
+                <h3> Details </h3>
+                <div class="control-row">
+                    <div class="control-group select">
+                        <label for="id_system">Appliance</label>
+                        <select name="system" id="id_system" style="width: 230px" disabled>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-row" style="margin: 0px;" id = "id_virtualHost_info" >
+                    <div class="control-group text">
+                        <label for="id_virtualHost">Virtual Host</label>
+                        <span class="info-label" id="id_virtualHost" style="font-size: 12px; font-weight:bold; margin-left: 12px;"></span>
+                    </div>
+                </div>
+                <div class="control-row" style="margin-left: -10px; margin-top: 5px; margin-bottom: 5px;" id = "id_encrypt_section" ng-show="showEncryptionCheckBox">
+                    <div class="control-group checkbox modal-form-no-box" >
+                        <label for="id_encrypted"><input type="checkbox" name="is_encrypted" id="id_encrypted" />Encrypt Backups</label>
+                    </div>
+                </div>
+                <div class="control-row" id = "id_encrypt_section_dropdown" ng-hide="showEncryptionCheckBox">
+                    <div class="control-group text">
+                        <label for="id_encrypted_dropdown">Encrypt Backups</label>
+                        <select ng-model='encryption_strategy' name="encryption_options"   style="margin-left: 10px"  id="id_encrypted_dropdown">
+                            <option value="keep-current" >Keep the current encryption settings for these assets</option>
+                            <option value="none" >Do not encrypt any of the backups for these assets</option>
+                            <option value="all">Encrypt all of the backups for these assets</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-form-box" style="top: 10px;">
+                <h3> <input type="checkbox" id="credentials_is_allowed"><translate>Credentials</translate></h3>
+                <div class="control-row">
+                    <div class="control-group select">
+                        <label for="credential_id"><translate>Credentials</translate></label>
+                        <select name="credential_id" class="credentials-selection-list" id="credential_id" style="min-width:80px;width: 230px" />
+                    </div>
+                    <div class="help-trigger" style="margin-left: 10px; margin-right: 10px;">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition"><translate>Administrative credentials</translate>.</span>
+                    <span class="btn-manage-credential">
+                        <a class="settings-edit" ng-click="launchCredentialManager()">
+                            <i class="icon-gears icon-large" style="margin-right: 10px;"></i><translate>Manage Credentials</translate></a>
+                    </span>
+                </div>
+                <div class="modal-form-credential">
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_displayName"><translate>Credential Name</translate></label>
+                            <input type="text" name="display_name" id="id_credentials_displayName" style="width: 230px" />
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_username"><translate>Username</translate></label>
+                            <input type="text" name="user_name" id="id_credentials_username" style="width: 230px"/>
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Include a username with administrator credentials</translate>.</span>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_password"><translate>Password</translate></label>
+                            <input type="password" name="password" id="id_credentials_password" style="width: 230px"/>
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Include a password with administrator credentials</translate>.</span>
+                    </div>
+                    <div class="control-row" style="margin-left: 10px;">
+                        <div class="control-group checkbox">
+                            <label for="id_default">
+                                <input type="checkbox" name="is_default" id="id_default" />
+                                <translate>Set as default</translate>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class = "modal-form-box" id = "quiesce_box" style="top: 10px;height:140px;">
+                <h3><translate>Quiesce</translate></h3>
+                <div  style="width:120px;margin: 0px;float: left;padding-top: 18px;font-size: 12px;">
+                    <label><translate>Quiesce Settings</translate></label>
+                </div>
+                <div style="float:left;">
+                    <div class="control-row radios hidden" id="quiesce_multiple_settings_radioselection_row">
+                        <label for="quiesce_multiple_settings_radioselection" style="width: 100%;">
+                            <input type="radio" id="quiesce_multiple_settings_radioselection" value="multiple"
+                                   ng-model="quiesceSetting" style="margin-right: 10px;">
+                            <translate>Keep Existing Quiesce Settings</translate>
+                            <div class="help-trigger" style="margin-left: 10px; margin-right: 10px;">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition">
+                                <translate>The selected assets have previously existing quiesce settings that are not the same.</translate>
+                                <translate>Select this option to have the assets keep their previously existing quiesce settings.</translate>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="control-row radios">
+                        <label for="quiesce_crash_consistent_radioselection" style="width: 100%;">
+                            <input type="radio" id="quiesce_crash_consistent_radioselection" value="Crash Consistent"
+                                   ng-model="quiesceSetting" style="margin-right: 10px;">
+                            <translate>Crash Consistent</translate>
+                            <div class="help-trigger" style="margin-left: 10px; margin-right: 10px;">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition"><translate>The VM is not quiesced before a backup is taken</translate>.</span>
+                        </label>
+                    </div>
+                    <div class="control-row radios">
+                        <label for="quiesce_app_consistent_radioselection" style="width: 100%;">
+                            <input type="radio" id="quiesce_app_consistent_radioselection" value="Application Consistent"
+                                   ng-model="quiesceSetting" style="margin-right: 10px;">
+                            <translate>Application Consistent</translate>
+                            <div class="help-trigger" style="margin-left: 10px; margin-right: 10px;">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition">
+                                <translate>Guest operating system invokes VSS for Windows (or another similar process in non-Windows OS, if supported by the hypervisor).</translate>
+                                <translate>This results in applications and file systems flushing their transactions prior to completing the disk snapshot.</translate>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="control-row radios" id="quiesce_app_aware_radioselection_row">
+                        <label for="quiesce_app_aware_radioselection" style="width: 100%;">
+                            <input type="radio" id="quiesce_app_aware_radioselection" value="Application Aware"
+                                   ng-model="quiesceSetting" style="margin-right: 10px;">
+                            <translate>Application Aware</translate>
+                            <div class="help-trigger" style="margin-left: 10px; margin-right: 10px;">
+                                <i class="icon-questionsign"></i>
+                            </div>
+                            <span class="definition">
+                                <translate>Installs Unitrends VSS provider into the Windows guest (requires guest OS credentials).</translate>
+                                <translate>Provider triggers VSS as in the above option with the addition of log truncation for MS Exchange.</translate>
+                                <translate>MS SQL logs will not be truncated.</translate>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="retentionSection">
+                <div class="modal-form-box" style="top: 10px;">
+                    <h3 class = "retention_checkbox_text" ><input type="checkbox" id="retention_is_allowed"><translate>Retention</translate></h3>
+                    <div id = "retention_information_text"></div>
+                    <div class="control-row">
+                       <div class="control-group select">
+                            <label for="id_retentionPolicy"><translate>Retention Policy</translate></label>
+                            <select name="id_retentionPolicy" class="retentionPolicyList" id="id_retentionPolicy" style="min-width:80px;" ng-model="selectedRetention"
+                                    ng-options="{{assetList.retention}}"
+                                    ng-change="onChangePolicy()">
+                            </select>
+                        </div>
+
+
+                        <div class="help-trigger" style="margin-left: 10px; margin-right: 10px;">
+                            <i class="icon-questionsign"></i>
+                        </div>
+
+                        <span class="definition">Select retention policy.</span>
+
+                        <span id="id-retention-definition" class="definition"><translate>Click Manage Retention to update the retention policy</translate>.</span>
+                        <span ng-show="showRetention" class="btn-manage-credential">
+                            <a class="settings-edit" ng-click="launchRetentionManager()">
+                                <i class="icon-gears icon-large"></i>&nbsp;&nbsp;<translate>Manage Retention</translate></a>
+                        </span>
+                        <span ng-show="!showRetention" class="btn-manage-credential">
+                            <a href><i class="icon-bancircle icon-large"></i>&nbsp;&nbsp;Cannot be Changed</a>
+                        </span>
+                    </div>
+
+            </div><!-- End retention section -->
+
+            <div id="dialog-errors">
+                <p class="summary error"></p>
+                <ul id="dialog-error-list" class="errorlist"></ul>
+            </div>
+        </div>
+        </div>
+        </form>
+    </div>
+    <div class="ngdialog-footer">
+        <button type="submit" class="ngdialog-button" ng-click="editMultipleAssets()"><translate>Save</translate></button>
+        <button type="button" class="ngdialog-button" ng-click="closeAssetDialog()"><translate>Cancel</translate></button>
+    </div>
+</div>

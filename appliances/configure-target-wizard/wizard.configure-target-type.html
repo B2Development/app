@@ -1,0 +1,16 @@
+    <div class="replicationTarget-mainWizard"  ng-form="formName.addReplicationTargetForm">
+		<div style="height:160px;">
+            <span ng-show="submitted && formName.addReplicationTargetForm.$invalid" style="color:red"> <translate>Please select target type.</translate></span>
+			<div class="replication-addTarget-title"><translate>Select a replication target type for</translate> {{replicationApplianceName}}'s <translate>backups</translate></div>
+
+			<!--<div class="replication-addTarget-radioBtnDiv">
+				 <input type="radio" id="existingAppRadioBtnId" value="2" ng-model="replicationTargetData.radioBtnSelection" ng-change="selectionChange(replicationTargetData.radioBtnSelection)" ng-required="!replicationTargetData.radioBtnSelection"/><span>Use an existing managed appliance as a replication target</span>
+			</div> -->
+			
+			<div class="replication-addTarget-radioBtnDiv"> 
+				 <input type="radio" id="newApplianceRadioBtnId" value="3" ng-model="replicationTargetData.radioBtnSelection" ng-change="selectionChange(replicationTargetData.radioBtnSelection)" ng-required="!replicationTargetData.radioBtnSelection"/><span>Add a new appliance to use as a replication target</span>
+			</div>
+		</div>
+	</div>
+
+

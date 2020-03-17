@@ -1,0 +1,23 @@
+<div id="shutdownRestartDialog">
+    <form id="shutdown-restart-form" ng-controller="shutdownRestartCtrl">
+    <div class="modal-form-no-box text">
+        <p><translate>To shutdown or restart this appliance, enter your root password.</translate></p>
+        <br/>
+        <div class="control-group text">
+            <label for="os_password"><translate>Root Password</translate></label>
+            <input id="os_password" name="os_password" type="password" required/>
+        </div>
+    </div>
+
+    <footer id="restart-form-footer" class="modal-form-footer">
+        <div class="actions">
+            <div class="inner">
+                <button id="btnShutdown" type="button" class="btn btnShutdown" title="Shutdown the appliance and do not restart it." disabled><translate>Shutdown</translate></button>
+                <button id="btnRestart" type="button" class="btn btnRestart" title="Shutdown and restart the appliance." disabled><translate>Restart</translate></button>
+                <button id="btnCancel" type="button" class="btn btnCancel" style="margin-left:40px"><translate>Cancel</translate></button>
+            </div>
+        </div>
+    </footer>
+
+</form>
+</div>

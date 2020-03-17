@@ -1,0 +1,36 @@
+<div class="ngdialog-message" id="changer-import-dialog">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title"><translate>Import Changer</translate></span>
+    </div>
+    <div ng-if="slotNumberError" id="dialog-errors" style="display: block;">
+        <p class="summary error"><translate>Correct the following errors:</translate></p>
+        <ul class="errorlist" id="dialog-error-list">
+            <li ng-if="slotNumberError">
+                <label id="catalog-checked-error" class="error" style="display: inline;" for="catalog-checked">
+                    <translate>Slot number is required.</translate>
+                </label>
+            </li>
+        </ul>
+    </div>
+    <div class="ngdailog-body">
+        <div class="control-group text">
+            <label><translate>Slot Number</translate></label><input
+                title='Enter slot numbers using a comma-separated list and/or ranges.Example: 1,2,3,5-8”' type='text'
+                ng-model='importObject.slotNumber'/>
+        </div>
+        <div class="control-group checkbox">
+            <label>
+                <input type='checkbox' ng-model='importObject.forceImport'/>
+                <translate>Force</translate>
+                <div class="help-trigger" ng-click="showTooltipForForce()">
+                    <i class="icon-questionsign"></i>
+                </div>
+            </label>
+            <span class="definition" id="force-tooltip"><translate>Force option should be checked for tape devices that were prepared or used on another appliance.</translate></span>
+        </div>
+        <div class="ngdialog-footer">
+            <button type="button" class="ngdialog-button" ng-click="importChanger()"><translate>Yes</translate></button>
+            <button type="button" class="ngdialog-button" ng-click="closeImportChangerDialog()"><translate>Cancel</translate></button>
+        </div>
+    </div>
+</div>

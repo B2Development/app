@@ -1,0 +1,27 @@
+		<div style="height:200px;" class="replicationTarget-mainWizard" ng-form='formName.addressForm'>
+		
+			<div ng-show="replicationTargetData.radioBtnSelection == '2'">
+					 <div class="replication-addTarget-title"><translate>Select existing managed appliance as a backup copy target</translate></div>
+					 <div  id="replication-addTarget-GridId" class="replicationGridStyle" ng-grid="replicationGridOptions">
+					 <div class="noDatFoundTextDiv" ng-show="applianceGridData.length == 0"><translate>No data available</translate></div>	
+				     </div>
+			</div>
+			
+			<div ng-show="replicationTargetData.radioBtnSelection == '3'" >
+				<div class="replication-addTarget-title"><translate>Add new appliance Address</translate></div>
+				<div class="replication-addTarget-inputDiv" id="newIP_div_id">
+					 <span>Host Name</span>
+					 <input ng-model="addressFormData.replicationTarget_hostname" required name="replicationTarget_hostname"  type="text" />
+					 <span ng-show="submitted && formName.addressForm.replicationTarget_hostname.$invalid" style="color:red"> <translate>Enter valid Host Name</translate>.</span> 
+				</div>
+				<div class="replication-addTarget-inputDiv" id="newIP_div_id">
+					 <span><translate>IP Address</translate></span>
+					 <input ng-model="addressFormData.replicationTarget_IpAddress" name="replicationTarget_IpAddress"  type="text" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$"/>
+					 <span ng-show="submitted && formName.addressForm.replicationTarget_IpAddress.$invalid" style="color:red"> <translate>Enter valid IP Address.</translate></span> 
+				</div>
+				<div class="replication-addTarget-inputDiv" id="newSecure_id">
+					 <span><translate>Secure Connection</translate></span>
+					 <input ng-model="addressFormData.replicationTarget_isSecure" name="replicationTarget_isSecure"  type="checkbox" />
+				</div>
+			</div>
+		</div>

@@ -1,0 +1,30 @@
+<div class="ngdialog-message" ng-controller="backupCopyCatalogCtrl">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title"><translate>Backup Copy Sets in Catalog:</translate></span>
+    </div>
+    <form id="catalog-sets-form" style="margin:4px">
+        <div  id="setsGrid" ng-if="showSets"
+              ui-grid="setsGridData"
+              ui-grid-resize-columns
+              ui-grid-selection
+              ui-grid-move-columns
+              ui-grid-auto-resize class="gridStyle ui-grid-viewport" style="overflow:hidden;height:310px;font-size:12px">
+        </div>
+        <div ng-if="!showSets">
+            <p>
+                <translate>There are no cold backup copy sets in the catalog.</translate>
+            </p>
+        </div>
+
+        <footer class="modal-form-footer">
+            <div class="actions">
+                <div class="inner">
+                    <button id="btnDetails" type="button" class="btn" ng-disabled="selectedSets.length == 0" ng-click="showSetDetails()"><translate>Details</translate></button>
+                    <button id="btnPurge" type="button" class="btn" ng-disabled="selectedSets.length == 0" ng-click="purgeSets()"><translate>Purge</translate></button>
+                    <button id="btnCancel" type="button" class="btn btnCancel" ng-click="closeSetsDialog()"><translate>Close</translate></button>
+                </div>
+            </div>
+        </footer>
+
+    </form>
+</div>

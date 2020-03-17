@@ -1,0 +1,44 @@
+<div id="edit-appliance-dialog">
+
+<div id="edit-appliance" ng-controller="EditApplianceCtrl" class="tabs-wrapper ui-tabs" style="min-height: 600px;">
+    <div style="display:none;" id="edit_object_id">none</div>
+
+    <ul class="ui-tabs-nav ui-helper-clearfix">
+        <li><a href="#config-general" translate> General </a></li>
+        <li><a href="#config-email" translate> Email </a></li>
+        <li><a href="#config-users" translate> Users </a></li>
+        <li><a href="#config-datetime" translate> Date Time </a></li>
+        <li><a href="#config-license-edit" translate> License </a></li>
+        <li><a href="#config-advanced-backupcopy" translate> Backup Copy </a></li>
+        <li><a href="#config-encryption" translate> Advanced </a></li>
+    </ul>
+
+    <div id="config-general" class="sub-tab edit-appliance-tab">
+        <section id="form-general" class="full-height" ng-include="'app/configure/appliances/add.html'"></section>
+    </div>
+
+    <div id="config-email" class="sub-tab edit-appliance-tab">
+        <section id="form-email" class="full-height" ng-include="'app/configure/notifications/email.html'"></section>
+    </div>
+
+    <div id="config-users" class="sub-tab edit-appliance-tab">
+        <section id="form-users" class="full-height" ng-include="'app/configure/appliances/users.html'"></section>
+    </div>
+    
+    <div id="config-datetime" class="sub-tab edit-appliance-tab">
+        <section id="form-datetime" class="full-height" ng-include="'app/configure/appliances/dateTimeEditConfig.html'"></section>
+    </div>
+
+    <div id="config-license-edit" class="sub-tab edit-appliance-tab">
+        <section id="form-license-edit" class="full-height" ng-include="'app/configure/appliances/license.html'"></section>
+    </div>
+
+    <div id="config-advanced-backupcopy" class="sub-tab edit-appliance-tab">
+        <section id="form-advanced-backupcopy" class="full-height" ng-include="'app/configure/backupcopy/advancedBackupCopyEdit.html'"></section>
+    </div>
+
+    <div id="config-encryption" class="sub-tab edit-appliance-tab">
+        <section id="form-encryption" class="full-height" ng-include="'app/configure/encryption/encryption.html'"></section>
+    </div>
+</div>
+</div>

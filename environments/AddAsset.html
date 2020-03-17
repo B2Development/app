@@ -1,0 +1,155 @@
+<div class="ngdialog-message" ng-controller="AddServerCtrl" id="addServerDialog">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title" id="add-asset-dialog-title"><translate>Add Asset</translate></span>
+    </div>
+    <div class="ngdailog-body" style="padding: 5px;margin-bottom: 0;">
+        <form name="AddServerForm" ng-submit="addAsset()" novalidate>
+
+            <div style="display:none;" id="edit_object_id">none</div>
+            <div class="dialog-common-label" id="common_dialog_label">
+                <label ng-hide="isCE">
+                    <translate>Enter details for the asset you would like to protect. Agents are installed automatically</translate>
+                    <a href="https://unitrends-support.force.com/UnitrendsBackup/s/article/000003726" target="_blank"><translate>when possible</translate></a>.
+                </label>
+                <label ng-show="isCE">
+                    <translate>Enter details for the asset you would like to protect.</translate>
+                </label>
+            </div>
+
+            <div class="modal-form-box" style="top: 10px;">
+                <h3><translate>Details</translate></h3>
+                <div class="control-row">
+                    <div class="control-group select">
+                        <label for="id_system"><translate>Appliance</translate></label>
+                        <select name="system" id="id_system" style="width: 230px">
+                        </select>
+                    </div>
+                </div>
+                <div class="control-row">
+                    <div class="control-group text">
+                        <label for="id_server"><translate>Asset Name</translate></label>
+                        <input type="text" name="name" id="id_server" style="width: 230px"/>
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition" id = "host_name_tooltip">{{hostnameErrorString | translate}}</span>
+                </div>
+                <div class="control-row" style="margin: 0px;">
+                    <div class="control-group text">
+                        <label for="id_ip"><translate>IP Address</translate></label>
+                        <input id="id_ip" type="text" name="ip" maxlength="128" style="width: 230px"/>
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition">
+                        <translate>Enter either the IP address or a resolvable hostname of this</translate> <translate>Asset</translate>.
+                    </span>
+                </div>
+                <div class="control-row" style="margin: 0px;">
+                    <div class="control-group checkbox modal-form-no-box" style="left: -10px;">
+                        <label for="id_encrypted">
+                            <input type="checkbox" name="is_encrypted" id="id_encrypted" />
+                            <translate>Encrypt Backups</translate>
+                        </label>
+                    </div>
+
+                    <div class="help-trigger" style="margin-top: 10px;margin-bottom: -20px;margin-left: -10px;">
+                        <i class="icon-questionsign"></i>
+                    </div>
+
+                    <span class="definition">
+                        <translate>Enabling encryption for an agent-based asset or Hyper-V host will encrypt the file-level backups only.</translate><br>
+                        <translate>To encrypt backups for individual assets (VMs, databases, etc.) select them in the Protected Assets tab and click Edit.</translate>
+                    </span>
+                </div>
+                <div class="control-row" id="id_installAgentDiv" style="margin: 0px;">
+                    <div class="control-group checkbox modal-form-no-box" style="left: -10px;">
+                        <label for="id_installAgent">
+                            <input type="checkbox" name="id_installAgent" checked id="id_installAgent" />
+                            <translate>Install Agent (Windows only)</translate>
+                        </label>
+                    </div>
+                    <div class="help-trigger" style="margin-top: 10px;margin-left: -10px;">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="agent-definition">{{pushMessage}}</span>
+                </div>
+            </div>
+
+            <div class="modal-form-box" id="id_CredentialsDiv" style="top: 10px;">
+                <h3><translate>Credentials</translate></h3>
+                <div class="control-row">
+                    <div class="control-group select">
+                        <label for="credential_id"><translate>Credentials</translate></label>
+                        <select name="credential_id" class="credentials-selection-list" id="credential_id" style="min-width:80px;width: 230px" />
+                    </div>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition"><translate>Administrative credentials</translate>.</span>
+
+                    <span class="btn-manage-credential" style="margin-left: 10px;">
+                        <a class="settings-edit" ng-click="launchCredentialManager()">
+                            <i class="icon-gears icon-large" style="margin-right: 10px;"></i><translate>Manage Credentials</translate></a>
+                    </span>
+                </div>
+                <div class="modal-form-credential">
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_displayName"><translate>Credential Name</translate></label>
+                            <input type="text" name="display_name" id="id_credentials_displayName" ng-model="credential.name" required style="width: 230px" />
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Display name of credential</translate>.</span>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_username"><translate>Username</translate></label>
+                            <input type="text" name="user_name" id="id_credentials_username" ng-model="credential.username" required style="width: 230px"/>
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Include a username with administrator credentials</translate>.</span>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_credentials_password"><translate>Password</translate></label>
+                            <input type="password" name="password" id="id_credentials_password" style="width: 230px"/>
+                        </div>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition"><translate>Include a password with administrator credentials</translate>.</span>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group text">
+                            <label for="id_domain"><translate>Domain (Optional)</translate></label>
+                            <input type="text" name="domain" id="id_domain" style="width: 230px"/>
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <div class="control-group checkbox" style="margin-bottom: -20px;">
+                            <label for="id_default">
+                                <input type="checkbox" name="is_default" id="id_default" />
+                                <translate>Set as default</translate>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="dialog-errors">
+            <p class="summary error"></p>
+            <ul id="dialog-error-list" class="errorlist"></ul>
+            </div>
+        </form>
+    </div>
+     <div class="ngdialog-footer">
+         <button id="id_btnSaveAsset" type="submit" class="ngdialog-button" ng-click="addAsset()"><translate>Save</translate></button>
+         <button type="button" class="ngdialog-button" ng-click="closeAssetDialog()"><translate>Cancel</translate></button>
+    </div>
+</div>

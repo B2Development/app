@@ -1,0 +1,39 @@
+<div id="advancedEditSettingsDialog">
+    <!-- since we are incorporating into the existing jQuery UI mini-wizard, no need for a title - that component provides one.-->
+    <!--<div class="ngdialog-titlebar">
+        <span class="ngdialog-title" id = "title" >Edit Setting</span>
+    </div>-->
+    <form id="edit-settings-form">
+        <div class="modal-form-no-box" style="margin-left:18px">
+            <div class="control-group text">
+                <label for="field"><translate>Section</translate></label>
+                <input id="section" ng-model="selectedSetting.section" disabled/>
+            </div>
+            <div class="control-group text">
+                <label for="field"><translate>Name</translate></label>
+                <input id="field" ng-model="selectedSetting.field" disabled/>
+            </div>
+            <div class="control-group text">
+                <label for="description"><translate>Description</translate></label>
+                <input id="description" ng-model="selectedSetting.description" disabled title="{{selectedSetting.description}}"/>
+            </div>
+            <div class="control-group text">
+                <label for="value" id="setting_value"><translate>Value</translate>
+                    <span class="help-trigger" ng-click="showSettingsTooltip()"><i class="icon-questionsign icon-small"></i></span>
+                    <span class="definition"><translate>only change these advanced</translate><br/><translate>settings if absolutely</translate><br/><translate>required</translate></span>
+                </label>
+                <input id="value" ng-model="selectedSetting.value" name="value"/>
+            </div>
+        </div>
+
+        <footer id="settings-form-footer" class="modal-form-footer">
+            <div class="actions">
+                <div class="inner">
+                    <button type="submit" class="btn" ng-click="saveSettings()"><translate>Save</translate></button>
+                    <button id="btnCancel" type="button" class="btn btnCancel" ng-click="closeEditDialog()"><translate>Cancel</translate></button>
+                </div>
+            </div>
+        </footer>
+
+    </form>
+</div>

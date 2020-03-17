@@ -1,0 +1,30 @@
+<div id="date_range_component" class="control-row">
+    <div ng-controller="DateRangeCtrl" ng-init="initCtrl()">
+        <div class="control-group select">
+            <label for="date_range_type" style="width:100px;"><translate>Range Type</translate>:</label>
+            <select ng-model="selectedRange.label" ng-change="onDateRangeChange(selectedRange.label)" id="date_range_type"
+                    style="width:115px"
+                    ng-options="obj.label as obj.label for obj in dateRangeTypes">
+            </select>
+
+            <div ng-if="selectedRange.label == 'Custom Days'">
+                <label class="label" for="id_custom_days" style="width:60px;font-size:1.2em;padding-left:20px"><translate>Days</translate>:</label>
+                <input type="text" id="id_custom_days" name="custom_days" ng-model="dateRange.custom_days"
+                       onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                       style="width:40px;margin-left:4px;margin-top:2px;margin-right:2px;padding-left:4px" recurspinner />
+            </div>
+        </div>
+
+        <div ng-show="selectedRange.label == 'Custom Date'" class="control-group text">
+            <div style="float: left;" class="text datepicker">
+                <label style="width:70px;font-size:1.2em" class="label"><translate>From</translate>:</label>
+                <input id="id_custom_start" style="width:115px;margin-left:10px" type="text" name="start_date" ng-model="dateRange.startDate" min-date="none" angulardate-picker />
+            </div>
+            <div style="float: left;" class="text datepicker">
+                <label style="width:42px;font-size:1.2em;margin-left:20px" class="label"><translate>To</translate>:</label>
+                <input id="id_custom_end" style="width:115px;margin-left:10px" type="text"  name="end_date" ng-model="dateRange.endDate" min-date="none" angulardate-picker />
+            </div>
+        </div>
+    </div>
+
+</div>

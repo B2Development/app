@@ -1,0 +1,57 @@
+{
+    "targets": [
+        {
+            "name": "myUEB11",
+            "id": 1,
+            "targets": [
+                {
+                    "name": "Cloud_Storage-1",
+                    "status": "online",
+                    "type":"cloud_storage",
+                    "gb_size": 1024,
+                    "gb_free": 420,
+                    "max_size": 768,
+                    "id":1
+                },
+                {
+                   "name": "Unitrends-Cloud-1",
+                    "status": "pending",
+                    "type": "Unitrends_cloud",
+                    "message": "Waiting on target.  Replication request initiated at Oct 20, 2014 at 9:30 am EDT.",
+                    "created": "July 08, 2015, 10:04 am",
+                    "updated": "July 08, 2015, 11:04 am",
+                    "id":2
+                },
+                {
+                    "name": "CentOS6-UEB",
+                    "status": "failed",
+                    "type": "appliance",
+                    "message": "Failure message, indicating actions to take to fix",
+                    "created": "July 08, 2015, 10:04 am",
+                    "updated": "July 08, 2015, 11:04 am",
+                    "id":3
+                },
+                {
+                    "name": "Target-4",
+                    "status": "rejected",
+                    "type":"Unitrends_cloud",
+                    "message": "rejected message, indicating actions to take to fix",
+                    "gb_size": 1024,
+                    "gb_free": 420,
+                    "max_size": 768,
+                    "id":4
+                },
+                {
+                    "name": "Cloud_Storage",
+                    "status": "pending",
+                    "type":"Unitrends_cloud",
+                    "gb_size": 1024,
+                    "gb_free": 720,
+                    "max_size": 468,
+                    "id":5
+                }
+                
+            ]
+        }
+    ]
+}

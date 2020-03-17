@@ -1,0 +1,26 @@
+<div class="ngdialog-message">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title "><translate>Connection Could Not Be Verified</translate></span>
+    </div>
+    <div class="ngdailog-body" style="display: table;">
+        <span style="vertical-align: top;display: table-cell;">
+           <img ng-show="true" class="alert-icon" width="28"
+                height="28" style="vertical-align: top; margin-right: 1em;display: table-cell; ">
+        </span> 
+        <span style="vertical-align: middle;display: table-cell;">
+            <label style="font:12px sans-serif;padding-left:15px;display: table-cell;">
+                <p><translate>The security certificate for</translate> {{ngDialogData.appliancename}} <translate>is not trusted by your Unitrends Appliance.</translate></p>
+
+                <p><translate>This may be caused by a misconfiguration, an imposter intercepting your connection, or the appropriate certificates have not been installed on the target Unitrends Appliance.</translate></p>
+
+                <p><translate>If the communication is occurring within a private network it is probably safe to proceed. Otherwise, please ensure the appropriate certificates are in place on the target and try again.</translate></p>
+            </label>
+        </span>
+    </div>
+    <div class="ngdialog-footer">
+        <button type="button" class="ngdialog-button"
+                ng-click="onInsecureOptionContinueClick()" ng-show="true"><translate>Continue</translate>
+        </button>
+        <button type="button" class="ngdialog-button" ng-click="closeAllDialog()"><translate>Cancel</translate></button>
+    </div>
+</div>

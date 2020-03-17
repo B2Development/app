@@ -1,0 +1,109 @@
+<div id="aboutDialog" class="tabs-wrapper ui-tabs">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title" id = "title" translate>Set Details</span>
+    </div>
+    <div style="margin:10px;float:left;">
+        <fieldset style="width:380px;margin-top:12px">
+            <legend><span style="color:#39424a;font-size:12px;font-weight:bold;height:500px;text-transform:uppercase;"><translate>Overall</translate></span></legend>
+            <div class="control-group text">
+                <label><translate>Description</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.description" />
+            </div>
+            <div class="control-group text">
+                <label><translate>Date/Time</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.date" />
+            </div>
+            <div class="control-group text">
+                <label><translate>Elapsed Time</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.elapsed_time" />
+            </div>
+            <div class="control-group text">
+                <label><translate>Status</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.status"/>
+            </div>
+            <div class="control-group text">
+                <label><translate>Asset Tag</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.originating_asset"/>
+            </div>
+            <div class="control-group text">
+                <label><translate>Media Label</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.media_label"/>
+            </div>
+            <div class="control-group text">
+                <label><translate>Media Serials</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.media_serials"/>
+            </div>
+            <div class="control-group checkbox" style="height:20px">
+                <label style="width: 100%;">
+                    <translate>Media Available?</translate>
+                    <input type="checkbox" ng-disabled="true"
+                           ng-model="setInfo.available" style="margin-left:35px;">
+                </label>
+            </div>
+        </fieldset>
+    </div>
+    <div style="margin:10px;float:left">
+        <fieldset style="width:420px;margin-top:12px">
+            <legend><span style="color:#39424a;font-size:12px;font-weight:bold;height:500px;text-transform:uppercase;"><translate>Profile</translate></span></legend>
+            <div class="control-group text">
+                <label><translate>Date Range</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.dateRange" />
+            </div>
+            <div class="control-group text">
+                <label><translate>Assets</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.instanceNames" title="{{setInfo.instanceNames}}"/>
+            </div>
+            <div class="control-group text">
+                <label><translate>Backup Modes</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.backupTypes"/>
+            </div>
+            <div class="control-group text">
+                <label><translate>Target</translate></label>
+                <input class="selectable-input-readonly" readonly ng-model="setInfo.profile.target" />
+            </div>
+            <fieldset style="width:400px;margin-top:12px">
+                <legend><span style="color:#39424a;font-size:12px;font-weight:bold;height:500px;text-transform:uppercase;"><translate>Options</translate></span></legend>
+                <div class="control-group checkbox" style="height:20px">
+                    <label style="width: 100%;">
+                        <input type="checkbox" ng-disabled="true" ng-true-value="false" ng-false-value="true"
+                               ng-model="setInfo.profile.options.append" style="margin-right: 10px;">
+                        <translate>Overwrite</translate>
+                    </label>
+                </div>
+                <div class="control-group checkbox" style="height:20px">
+                    <label style="width: 100%;">
+                        <input type="checkbox" ng-disabled="true"
+                               ng-model="setInfo.profile.options.encrypt" style="margin-right: 10px;">
+                        <translate>Encrypt</translate>
+                    </label>
+                </div>
+                <div class="control-group checkbox" style="height:20px">
+                    <label style="width: 100%;">
+                        <input type="checkbox" ng-disabled="true"
+                               ng-model="setInfo.profile.options.email_report" style="margin-right: 10px;">
+                        <translate>Email Report</translate>
+                    </label>
+                </div>
+                <div class="control-group checkbox" style="height:20px">
+                    <label style="width: 100%;">
+                        <input type="checkbox" ng-disabled="true"
+                               ng-model="setInfo.profile.options.purge" style="margin-right: 10px;">
+                        <translate>Purge (Delete older backup copies)</translate>
+                    </label>
+                </div>
+                <div class="control-group text" style="height:20px">
+                    <label><translate>Retention Days</translate></label>
+                    <input class="selectable-input-readonly" style="width:50px" readonly ng-model="setInfo.profile.options.retention_days" />
+                </div>
+            </fieldset>
+        </fieldset>
+    </div>
+
+    <div class="modal-form-no-box" style="margin-bottom:8px;padding-top:0">
+        <div class="actions" style="margin-bottom:-2px">
+            <div class="inner">
+                <button type="submit" class="btn" ng-click="closeThisDialog()"><translate>Close</translate></button>
+            </div>
+        </div>
+    </div>
+</div>

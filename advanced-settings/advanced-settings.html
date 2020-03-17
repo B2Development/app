@@ -1,0 +1,21 @@
+<div id="advancedSettingsTree">
+    <div ng-app="advanced-settings-module" ng-controller="advancedSettingsCtrl">
+        <form id="advanced-settings-form">
+            <div  id="settingsGrid"
+                  ui-grid="settingsGridData"
+                  ui-grid-resize-columns
+                  ui-grid-move-columns
+                  ui-grid-auto-resize class="gridStyle ui-grid-viewport" style="overflow:hidden;height:460px;font-size:12px">
+            </div>
+
+            <footer id="advanced-settings-form-footer" class="modal-form-footer">
+                <div class="actions">
+                    <div class="inner">
+                        <button id="btnCancel" type="button" class="btn btnCancel" ng-click="closeThisDialog()"><translate>Close</translate></button>
+                    </div>
+                </div>
+            </footer>
+
+        </form>
+    </div>
+</div>

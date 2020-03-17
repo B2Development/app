@@ -1,0 +1,111 @@
+<div ng-controller="DateTimeCtrl">
+
+<form id="form-datetime-appliance" class="config-form vba-form" action="/api/date-time/">  <!--action="/api/systems/" -->
+    <section class="modal-form-content" style="position:inherit;margin-top:8px;">
+        <div class="modal-form-box full-height">
+            <div class="control-row radios">
+                <label for="app_datetime_radioselection" style="width: 100%;">
+                    <input type="radio" id="app_datetime_radioselection" value="datetime" 
+                            name="datetimeradiogroup" style="margin-right: 10px;">
+                        <translate>Enter a date and time for your appliance.</translate>
+                </label>
+            </div>
+            <div class="control-row" style="margin-left: 25px;">
+                <div class="control-group datepicker" style="display: inline-flex;">
+                    <label for="appliance_date" style="width:70px;"><translate>Date</translate></label>
+                    <div id="datechangediv" class="datepicker-control">
+                        <input type="text" id="appliance_date"
+                               name="appliance_date" class="filter-date" style="width:182px;">
+                    </div>
+                </div>
+                <div class="help-trigger">
+                    <i class="icon-questionsign"></i>
+                </div>
+                <span class="definition">
+                    <translate>The date of the Unitrends appliance you are going to manage.</translate>
+                </span>
+            </div>
+
+            <div class="control-row" style="margin-left: 25px;">
+                <div class="control-group select">
+                    <label for="appliance_time" style="width:80px;"><translate>Time</translate></label>
+                    <input id="appliance_time" name="appliance_time" type="text" name="time" maxlength="10" placeholder="hh:mm:ss" />
+                </div>
+                <div class="help-trigger">
+                    <i class="icon-questionsign"></i>
+                </div>
+                <span class="definition">
+                    <translate>The time of the Unitrends appliance you are going to manage.</translate>
+                </span>
+            </div>
+            <div class="control-row" style="margin-left: 25px;">
+                <div class="control-group select">
+                    <label for="appliance_timezone" style="width:80px;"><translate>Timezone</translate></label>
+                    <select id="appliance_timezone" name="appliance_timezone" 
+                            class="filter-type filter-select"  style="width: 210px;margin-left: 0px;">
+                    </select>
+                </div>
+                <div class="help-trigger">
+                    <i class="icon-questionsign"></i>
+                </div>
+                <span class="definition">
+                   <translate> The timezone of the Unitrends appliance you are going to manage.</translate> <br>
+                </span>
+            </div>
+            <br/>
+            <div class="control-row radios">
+                <label for="app_ntpserver_radioselection" style="width: 100%;">
+                    <input type="radio" id="app_ntpserver_radioselection" value="ntpserver" 
+                            name="datetimeradiogroup" style="margin-right: 10px;">
+                       <translate> Use an NTP Server</translate>
+                </label>
+            </div>
+            <div id="divAddNtpServer" class="control-row" style="margin-left: 25px;width:100%">
+                <div class="control-group" style="width:100%">
+                    <div class="control-group text" style="width:100%">
+                        <label style="width: 110px;"><translate>NTP Server Address </translate></label>
+                        <input id="id_addNtpServerAddress" type="text" name="id_addNtpServerAddress" maxlength="100" style="width:250px;" />&nbsp;&nbsp;
+                        <nav class="button-bar pull-left" style="margin-left: 10px;">
+                            <ul>
+                                <li>
+                                    <a id="btnAddNtpServer" class="users-add" style="line-height:28px;" >
+                                        <i class="icon-plussign icon-large"></i> <translate>Add</translate>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        
+                    </div>
+                </div>
+            </div>
+            <div id="divNtpServerTable" class="control-row" style="margin-left: 25px;width:100%">
+                <fieldset id="ntptablefieldset"  style="width:32em;margin-left: 12em;" name="ntptablefieldset">
+                    <div  style="height:13em; overflow-y:scroll;" class="addNtpServerClassRule">
+                            <table id="ntpTable" class="data-table sort-table scroll-table"
+                                   cellspacing="0" width="100%" style="width:100%;font:400 12px/30px Oxygen,sans-serif;">
+                                <tr>
+                                    <td></td> 
+                                    <td style="border-left:2px solid #ff00ff;" class="ctrl-delete">
+
+                                    </td>
+                                </tr>
+                            </table>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </section>
+    <footer id="datetime-form-footer" class="modal-form-footer">
+        <div class="actions">
+            <div class="inner">
+                <button id="btnEditDateTimeSave" type="button" class="btn"><translate>Save</translate></button>
+                <button type="button" data-action="cancel" class="btn"><translate>Cancel</translate></button>
+            </div>
+        </div>
+    </footer>
+    <div id="dialog-errors" class="datetime-dialog-errors"><p class="summary error"></p>
+        <ul id="dialog-error-list" class="errorlist datetime-dialog-error-list"></ul>
+    </div>
+</form>
+</div>
+    

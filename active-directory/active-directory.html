@@ -1,0 +1,21 @@
+<div ng-app="active-directory-module" ng-controller="activeDirectoryCtrl">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title" translate>Active Directory Settings</span>
+    </div>
+
+    <form id="active-directory-advanced-form">
+        <div class="modal-form-no-box" style="margin-left:18px"
+             ng-include="'app/configure/active-directory/ad-template.html'">
+        </div>
+
+        <footer id="ad-form-footer" class="modal-form-footer">
+            <div class="actions">
+                <div class="inner">
+                    <button type="submit" class="btn" ng-click="saveSettings()"><translate>Save</translate></button>
+                    <button id="btnCancel" type="button" class="btn btnCancel" ng-click="closeThisDialog()"><translate>Close</translate></button>
+                </div>
+            </div>
+        </footer>
+
+    </form>
+</div>

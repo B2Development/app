@@ -1,0 +1,89 @@
+<div id="bandwidth-throttle-form" class="ngdialog-message" ng-init="init()" ng-controller="replicationThrottleController">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title"><translate>Configure Bandwidth</translate></span>
+    </div>
+    <br>
+    <div class="dailog-body add-padding-replication-form">
+        <h4 style="font-weight:normal"><translate>Add bandwidth throttling to use when copying</translate> {{replicationApplianceName}}'s <translate>backups</translate>
+            <span class="help-trigger" ng-click="showThrottleTooltip()"><i class="icon-questionsign icon-small"></i></span>
+            <span class="definition">
+                <translate>Configure throttle schedules for days of the week and hours of the day.</translate>
+                <translate>If any hours are included in more than one schedule, the</translate> <b><translate>first</translate></b> <translate>throttle percentage for that hour will be used.</translate></span>
+        </h4>
+        <nav class="button-bar">
+            <ul style="float:right;padding-top:4em;">
+                <li>
+                    <a class="settings-edit btn-add-appliance" value="Add Schedule"
+                       title="{{'Click to add Schedule' | translate}}" ng-click="addSchedule()">
+                        <i class="icon-plussign icon-large"></i><translate>Add Schedule</translate></a>
+                </li>
+            </ul>
+        </nav>
+        <br><br>
+        <span class="label-font">{{connectionTypeLabel + ":"}}</span>
+        <select id="connectionType"  style="margin:10px;" ng-model="connectionType" ng-selected="connectionType"
+                ng-options="item.name for item in connectionTypes track by item.value"></select>
+        <input type="text" ng-model="connectionType.value" name="customInputText" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+               ng-if="connectionType.name == customText" style="width:60px;"/>
+        <span ng-if="connectionType.name == customText" ><translate>Mbps</translate></span>
+        <p ng-hide="(connectionType.value !='' || connectionType.value ==0 ) || connectionType.name != customText" style="color:red;padding-left:1.3em;"><translate>Custom connection type is required field.</translate></p>
+        <p ng-hide="connectionType.value  !=0  || connectionType.name != customText" style="color:red;padding-left:1.3em;"><translate>Custom connection type value should not be 0.</translate></p>
+        <br><br>
+        <hr>
+        <form name="replicationThrottleForm" ng-submit="saveThrottleSchedule()">
+            <div ng-repeat="throttleSchedule in throttleSchedulesList" style="padding-bottom: 0;padding-top: 10px;">
+                <div style="padding-top:5px">
+                    <a href="#/configure" style="display:inline;font-size: 16px;" ng-click="showHideSchedule($index)"><translate>Schedule for</translate> {{throttleSchedule.percentage + "%"}} </a>
+                    <div style="float:right;margin-top: 10px;">
+                        <nav class="button-bar">
+                            <ul style="float:right;margin-top:-18px;">
+                                <li>
+                                    <a class="settings-edit btn-add-appliance"
+                                       title="{{'Click to remove' | translate}}" id="remove-schedule-{{throttleSchedule.id}}"  ng-click="removeSchedule($index)">
+                                        <i class="icon-removecircle icon-large"></i><translate>Remove</translate></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                
+                <br style="clear:both;">
+                <div ng-show="throttleSchedule.show">
+                    <span class="label-font"><translate>Throttle</translate>: </span>
+                    <select style="margin:6px 10px 10px 10px" name="percentage" ng-model="throttleSchedule.percentage"
+                            ng-options="obj.id as obj.name for obj in percentOptions"></select>
+                  <br/>
+                    <div style="margin: 14px 20px 0 0">
+                        <span class="label-font" style="margin-right:18px"><translate>Days</translate> : </span>
+                        <label ng-repeat="day in scheduleDays" style="margin-right:4px">
+                            <input type="checkbox" checklist-model="throttleSchedule.days" checklist-value="day.value"> {{day.name}}
+                        </label>
+                    </div>
+                    <p ng-hide=throttleSchedule.days.length !=0 style="color:red;padding-left:1.3em;"><translate>Please select at least one day for scheduling</translate> </p>
+                    <br/>
+                    <div style="margin: 0 20px 0 0">
+                        <span class="label-font"><translate>Type</translate> : </span>
+                        <select name="type" ng-init="throttleSchedule.type = ( throttleSchedule.start == 0 && throttleSchedule.end ==23  )? typeOptions[1].id : typeOptions[0].id"
+                                style="margin:10px 20px"
+                                ng-model="throttleSchedule.type" ng-options="obj.id as obj.name for obj in typeOptions"  ng-change="updateTypeModel($index)"></select>
+                        <span class="label-font" ng-if="throttleSchedule.type ==0 "><translate>From</translate>:</span>
+                        <select ng-if="throttleSchedule.type ==0 "  name="start" ng-model="throttleSchedule.start"
+                                style="margin:10px 20px"
+                                ng-options="obj.id as obj.name for obj in timeOptions"></select>
+                        <span class="label-font" ng-if="throttleSchedule.type ==0 " ><translate>To</translate>:</span>
+                        <select ng-if="throttleSchedule.type ==0" name="end" ng-init="throttleSchedule.end == (throttleSchedule.type == 1)? 23 : throttleSchedule.end"
+                                style="margin:10px 20px"
+                                ng-model="throttleSchedule.end" ng-options="obj.id as obj.name for obj in timeEndOptions" style="margin:20px"></select>
+                    </div>
+                    <p ng-hide="((throttleSchedule.type==0 && throttleSchedule.start <= throttleSchedule.end) ||  throttleSchedule.type==1 )" style="color:red"><translate>end must be greater than start</translate></p>
+                    <br/>
+                </div>
+                <hr>
+            </div>
+            <div style="padding-top:10px;" class="ngdialog-footer">
+                <input type="submit" class="ngdialog-button ngdialog-button" id="submit" value="{{'Save'|translate}}"/>
+                <button type="button" class="ngdialog-button ngdialog-button" ng-click="closeThisDialog()"><translate>Cancel</translate></button>
+            </div>
+        </form>
+    </div>
+</div>

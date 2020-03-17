@@ -1,0 +1,29 @@
+<div class="ngdialog-message" ng-controller="mediaSetsCtrl">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title"><translate>Backup Copy Sets on Media:</translate> {{target.name}}</span>
+    </div>
+    <form id="media-sets-form" style="margin:4px">
+        <div  id="setsGrid" ng-if="showSets"
+              ui-grid="setsGridData"
+              ui-grid-resize-columns
+              ui-grid-move-columns
+              ui-grid-auto-resize class="gridStyle ui-grid-viewport" style="overflow:hidden;height:310px;font-size:12px">
+        </div>
+        <div ng-if="!showSets">
+            <p>
+                <translate>There are no cold backup copy sets on the media.</translate>
+            </p>
+        </div>
+
+        <footer class="modal-form-footer">
+            <div class="actions">
+                <div class="inner">
+                    <button id="btnImport" type="button" class="btn"
+                            ng-disabled="!showSets" ng-click="showSets && importMediaSets()"><translate>Import To Catalog</translate></button>
+                    <button id="btnCancel" type="button" class="btn btnCancel" ng-click="closeSetsDialog()"><translate>Close</translate></button>
+                </div>
+            </div>
+        </footer>
+
+    </form>
+</div>

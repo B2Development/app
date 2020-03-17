@@ -1,0 +1,44 @@
+<div class="ngdialog-message">
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title"><translate>Add Backup Copy Target - Unitrends Appliance</translate></span>
+    </div>
+    <div class="ngdailog-body" ng-form='formName.addressForm' >
+        <label class="replication-addTarget-title" style="width:100%">
+            <translate>Add new appliance to use as a backup copy target</translate>
+        </label>
+        <div class="control-group text wider-label">
+            <label for="replicationTarget_hostname"><translate>Host Name</translate></label>
+            <input type="text" name="replicationTarget_hostname" 
+                   id="replicationTarget_hostname"
+                   ng-model="addressFormData.replicationTarget_hostname" required/>
+        </div>
+        <div class="control-group label" style="margin:-4px 0 -4px 0;height:10px" ng-show="submitted && formName.addressForm.replicationTarget_hostname.$invalid">
+            <label class="errorMsg"
+                   style="padding-left:160px;line-height:14px"><translate>Enter valid host name</translate></label>
+        </div>
+        <div class="control-group text wider-label">
+            <label for="replicationTarget_ipaddress"><translate>Host IP</translate></label>
+            <input type="text" name="replicationTarget_IpAddress" id="replicationTarget_ipaddress" 
+                   ng-model="addressFormData.replicationTarget_IpAddress"
+                   pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$"/>
+        </div>
+        <div class="control-group text wider-label">
+            <label for="replicationTarget_username" style="overflow:visible"><translate>User Name (optional)</translate></label>
+            <input type="text" name="replicationTarget_username" id="replicationTarget_username"
+                   ng-model="addressFormData.replicationTarget_username"
+                   />
+        </div>
+        <div class="control-group text wider-label">
+            <label for="replicationTarget_password"><translate>Password (optional)</translate></label>
+            <input type="password" name="replicationTarget_password" id="replicationTarget_password" 
+                   ng-model="addressFormData.replicationTarget_password"
+                   />
+        </div>
+    </div>
+    <br/>
+    <div class="ngdialog-footer">
+        <button type="button" class="ngdialog-button"
+                ng-click="submitted=true;addUnitrendsApplianceAsReplicationTarget()"><translate>Save</translate></button>
+        <button type="button" class="ngdialog-button" ng-click="closeThisDialog()"><translate>Cancel</translate></button>
+    </div>
+</div>

@@ -1,0 +1,143 @@
+<div ng-controller="UsersCtrl">
+
+<form id="users-edit-form" action="/api/users">
+    <section class="modal-form-content" style="position:inherit;margin-top:8px" id = "users_info">
+        <div class="modal-form-box" style="margin-bottom:10px">
+            <div style="height:150px;overflow-y:auto">
+                <table class="users-table data-table sort-table">
+                    <thead>
+                    <tr>
+                        <th data-source="username"> <translate>Username</translate> </th>
+                        <th data-source="role"> <translate>Role</translate> </th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <nav class="button-bar pull-left user_add_update_buttons" style="margin-left: 15px;margin-top:0;margin-bottom:5px;">
+            <ul>
+                <li>
+                    <a class="users-add" >
+                        <i class="icon-plussign icon-large"></i> <translate>Add</translate>
+                    </a>
+                </li>
+                <li>
+                    <a class="users-edit" >
+                        <i class="icon-edit icon-large"></i> <translate>Edit</translate> </a>
+                </li>
+                <li>
+                    <a class="users-delete" >
+                        <i class="icon-removecircle icon-large"></i> <translate>Remove</translate> </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class = "hidden" id = "add_update_users">
+            <div class="modal-form-box text">
+                <h3 id = "box_title"><translate>Add User</translate></h3>
+                <div class="control-group text">
+                    <label for="username"><translate>Username</translate></label>
+                    <input id="username" name="username" style="width: 70%"/>
+                </div>
+
+                <div class="control-group text hidden" id = "currentPassword">
+                    <label for="currentPasswordInput"><translate>Current Password</translate></label>
+                    <input id="currentPasswordInput" name="currentPassword" style="width: 70%" type = "password"/>
+                </div>
+
+                <div class="control-group text" id="change-password-group">
+                    <label id="passwordLabel1"><translate>Password</translate></label>
+                    <input id="password1" name="password1" style="width: 70%" type = "password"/>
+                    <a style="cursor: pointer;line-height: 30px ;margin-left: 10px" class = "hidden" id = "change_password" ><translate>Change</translate></a>
+                </div>
+
+                <div class="control-group text" id = "confirm_password">
+                    <label id="passwordLabel2"><translate>Confirm Password</translate></label>
+                    <input id="password2" name="password2" style="width: 70%" type = "password"/>
+                </div>
+
+                <div class="control-group select" id="user-primary-role">
+                    <label for="role"><translate>Role</translate></label>
+                    <select name="role" id="role" style="width: 70%">
+                    </select>
+                    <div class="help-trigger">
+                        <i class="icon-questionsign"></i>
+                    </div>
+                    <span class="definition" id = "role_tooltip"><b><translate>Monitor</translate>:</b> <translate>Read - only access to user interface and reports.</translate><br>
+                                                            <b><translate>Manage</translate>:</b> <translate>Monitor access plus ability to start backup jobs and modify retention.</translate> <br>
+                                                            <b><translate>Administrator</translate>:</b> <translate>Monitor and manage access plus appliance configuration.</translate></span>
+                </div>
+
+                <div id="supports-roles">
+                    <div class="control-group select">
+                        <label for="role"><translate>Access Level</translate></label>
+                        <select name="role-access" id="role-access" style="width:40%">
+                        </select>
+                        <div class="help-trigger">
+                            <i class="icon-questionsign"></i>
+                        </div>
+                        <span class="definition" id = "role_access_tooltip"><b><translate>Levels Applicable to Manage Users Only</translate></b><br/>
+                                                            <b><translate>No Restrictions:</translate></b> <translate>No Role-based access restrictions</translate><br/>
+                                                            <b><translate>Backup Operator:</translate></b> <translate>Can only run, enable/disable, or cancel backup or copy jobs</translate><br/>
+                                                            <b><translate>Recovery Operator:</translate></b> <translate>Can only run or cancel recovery jobs</translate> <br/>
+                                                            <b><translate>Backup/Recovery Operator:</translate></b> <translate>Can run, enable/disable, or cancel all job types.</translate></span>
+                        <nav class="button-bar pull-right" id="button-role-scope" style="margin-right:98px;margin-top:0;height:32px">
+                            <ul>
+                                <li>
+                                    <a class="btn-edit-scope" title="Manage assets in Recovery Scope">
+                                        <i class="icon-edit icon-large"></i><translate>Edit Scope</translate>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn-edit-recover-options" title="Manage Recovery Options">
+                                        <i class="icon-editalt icon-large"></i><translate>Edit Options</translate>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <nav class="button-bar pull-right" style="margin-right: 10px;margin-top:20px;margin-bottom:5px;">
+                    <ul>
+                        <li>
+                            <a class="users-save">
+                                <i class="icon-plussign icon-large"></i>
+                                <label id="users-save-button-id"><translate>Add</translate></label>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="users-cancel" >
+                                <i class="icon-removecircle icon-large"></i> <translate>Cancel</translate> </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="modal-form-content" style="position:inherit;margin-top:90px;" id="active-directory-info">
+        <div class="modal-form-box text">
+            <h3><translate>Current Active Directory Settings</translate></h3>
+            <div ng-include="'app/configure/active-directory/ad-template.html'" ng-controller="activeDirectoryDisplayCtrl"
+                 onload="refreshADSettingsDisplay()"
+                 title="{{'Click View/Modify to change Active Directory Settings' | translate}}"></div>
+        </div>
+    </section>
+
+    <footer id="users-form-footer" class="modal-form-footer">
+        <div class="actions">
+            <div class="inner">
+                <button id="btnADSettings" type="button" class="btn" style="float:left"><translate>Modify AD Settings</translate></button>
+                <button id="btnADUserRole" type="button" class="btn" style="float:left"><translate>Add AD User Role</translate></button>
+                <button type="button" data-action="submit" class="btn"><translate>Save</translate></button>
+                <button type="button" data-action="cancel" class="btn"><translate>Cancel</translate></button>
+            </div>
+        </div>
+    </footer>
+    <div id="dialog-errors" class="users-dialog-errors"><p class="summary error"></p><ul id="dialog-error-list" class="users-dialog-error-list errorlist"></ul></div>
+</form>
+</div>

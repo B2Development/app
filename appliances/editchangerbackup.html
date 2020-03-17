@@ -1,0 +1,57 @@
+<div id = "editTapeDialog" >
+
+    <div class="ngdialog-titlebar">
+        <span class="ngdialog-title" id = "title"> <translate>Edit Tape Changer Backup Copy Target</translate></span>
+    </div>
+
+    <form name = "CifsForm" id='changereditdialog' novalidate>
+        <div class="ngdailog-body" >
+
+            <div class="control-group text" >
+                <label style="margin-left: 5px;"><translate>Name</translate>:</label>
+                <input type="text" ng-model="changerName" ng-disabled='true' name ="name"  style="width: 60%;"/>
+            </div>
+            <div class="control-group text" >
+                <label class = "label" style="margin-left: 5px;"><translate>Serial</translate>:</label>
+                <label class = "label" style="margin-left: 9px;width: 232px;">{{serialName}} </label>
+            </div>
+            <div class="control-group text" >
+                <label class = "label" style="margin-left: 5px;"><translate>Slots</translate>
+                    <div class="help-trigger" ng-click="showTooltipForChangeTape()">
+                      <i class="icon-questionsign"></i>
+                    </div>
+                </label>
+                <span class="definition" id = "parent_changer_tooltip"><translate>Enter slot numbers using a comma-separated list and/or ranges. Example: 1,2,3,5-8</translate></span>    
+                 <input type="text"  ng-change='testForValidEntry()' ng-model="slotsObj.changerSlots" name ="name"  style="width: 60%;"/>
+            </div>
+            <br>
+            <section class="library-infor-content" style='bottom: 31px;'>
+                <div class="modal-form-box">
+                    <h3><translate>Tape Library Information</translate></h3>
+                    <br>
+                    <span ng-click='refreshGrid()' style='float: right;'><i class="icon-refreshalt btn-clear icon-gearalt"></i></span>
+                    <br style='clear:both'>
+                    <div  ui-grid="editChangerGridOptions" style="height:266px;"></div>
+                </div>
+                
+            </section>
+
+            <footer id="bds-form-footer" class="modal-form-footer">
+                <div class="actions">
+                    <div class="inner">
+                        <button type="submit" data-action="submit" ng-disabled='checkforValidSlots' class="btn" ng-click='saveSlotsSettings()'><translate>Save</translate></button>
+                        <button type="button" data-action="cancel" class="btn" ng-click="closeThisDialog()"><translate>Cancel</translate></button>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </form>
+</div>
+<style>
+    .library-infor-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+}
+</style>

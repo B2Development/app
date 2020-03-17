@@ -1,0 +1,35 @@
+<div class="ngdialog-titlebar">
+    <span class="ngdialog-title">{{ deleteTitle }}</span>
+</div>
+
+<div class="dailog-body" ng-init="confirmCB=false">
+
+    <div class="control-group" style="padding-left: 20px">
+        <label class="label">{{ confirmMessage1 }} </label>
+    </div>
+    <div class="control-group" style="padding-left: 20px">
+        <label class="label">{{ confirmMessage2 }} </label>
+    </div>
+    <div id="confirm-dialog" class="modal-form-no-box">
+        <input type="checkbox" id="id_confirm_cb"  ng-checked ="confirmCB"              
+               ng-model="confirmCB">
+        <label for="id_confirm_cb" style="margin-left:4px;font-size:12px">{{ confirmMessage3 }} </label>
+    </div>
+    <div class="modal-form-footer">
+        <div class="actions">
+            <div class="inner">
+                <button class="ngdialog-button" id="id-confirmed"
+                        ng-disabled="!confirmCB"
+                        type="submit"
+                        ng-click="deleteAsset()" > &nbsp;{{ submitButtonText }} &nbsp;
+                </button>
+                <button class="ngdialog-button" id="id-cancel" type="cancel" ng-click="closeThisDialog()"> &nbsp; <translate>Cancel</translate>
+                    &nbsp;
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

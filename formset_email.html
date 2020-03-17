@@ -1,0 +1,51 @@
+<p>Add email addresses to receive reports from this job (in addition to Global Email settings).</p>
+<div id="email-reporting-management" class="hidden management-form">
+    <input type="hidden" name="joborderemail_set-TOTAL_FORMS" value="1" id="id_joborderemail_set-TOTAL_FORMS" /><input type="hidden" name="joborderemail_set-INITIAL_FORMS" value="0" id="id_joborderemail_set-INITIAL_FORMS" /><input type="hidden" name="joborderemail_set-MAX_NUM_FORMS" value="1000" id="id_joborderemail_set-MAX_NUM_FORMS" />
+</div>
+<table id="email-reporting-table" class="data-table email-table">
+    <thead>
+        <tr>
+            <th><translate>Email Address</translate></th>            
+            <th><translate>Send Email...</translate></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody> 
+      <tr>
+          <td class="ctrl-email">
+              <div class="control-group text no-label"><input id="id_joborderemail_set-0-email" type="text" name="joborderemail_set-0-email" maxlength="75" /></div>
+          </td>       
+          <td class="ctrl-email-setting">
+            <select name="joborderemail_set-0-email_setting" id="id_joborderemail_set-0-email_setting">
+              <option value="1" selected="selected"><translate>Always</translate></option>
+              <option value="2"><translate>On Warnings and Errors Only</translate></option>
+              <option value="3"><translate>On Errors Only</translate></option>
+            </select>
+          </td>
+          <td class="ctrl-delete"><input type="checkbox" name="joborderemail_set-0-DELETE" id="id_joborderemail_set-0-DELETE" /></td>
+          <td class="ctrl-add">                 
+            <span class="btn-add-recipient" title="Add a recipient"><i class="icon-plussign"></i>
+            </span>   
+          </td>
+          <td><input type="hidden" name="joborderemail_set-0-id" id="id_joborderemail_set-0-id" /></td>
+      </tr>
+    </tbody>
+</table>
+
+<script type="text/template" id="email-row-template">
+    <td class="ctrl-email">
+        <div class="control-group text no-label"><input id="id_joborderemail_set-__prefix__-email" type="text" name="joborderemail_set-__prefix__-email" maxlength="75" /></div>
+    </td>
+    <td class="ctrl-email-setting">
+        <select name="joborderemail_set-__prefix__-email_setting" id="id_joborderemail_set-__prefix__-email_setting">
+          <option value="1" selected="selected"><translate>Always</translate></option>
+          <option value="2"><translate>On Warnings and Errors Only</translate></option>
+          <option value="3"><translate>On Errors Only</translate></option>
+        </select>
+    </td>
+    <td class="ctrl-delete"><input type="checkbox" name="joborderemail_set-__prefix__-DELETE" id="id_joborderemail_set-__prefix__-DELETE" /></td>
+    <td class="ctrl-add"></td>
+    <td><input type="hidden" name="joborderemail_set-__prefix__-id" id="id_joborderemail_set-__prefix__-id" /></td>
+</script>

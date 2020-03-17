@@ -1,0 +1,51 @@
+<section>
+    <div class="control-row">
+        <div class="control-group checkbox">
+            <label for="ad-template-ad_enabled" style="width: 100%;">
+                <input type="checkbox" id="ad-template-ad_enabled" ng-checked="activeDirectorySettings.AD_AuthenticationEnabled" ng-model="activeDirectorySettings.AD_AuthenticationEnabled"
+                       name="adSelection" style="margin-right:10px;">
+                <translate>Enable Active Directory authentication</translate>
+            </label>
+        </div>
+        <div ng-hide="displayOnly" class="help-trigger" ng-click='showADTooltip()'>
+            <i class="icon-questionsign"></i>
+            <span class="definition" id="ad_tooltip">{{adHelp}}</span>
+        </div>
+    </div>
+    <div class="control-group text">
+        <label style="width:180px" for="ad-template-ad_server"><translate>Active Directory Server</translate></label>
+        <input id="ad-template-ad_server" ng-model="activeDirectorySettings.AD_ServerName" name="ad_server" style="width:60%" />
+        <label for="ad-template-ad_ssl" style="width:120px;float:right">
+            <input type="checkbox" id="ad-template-ad_ssl" ng-checked="activeDirectorySettings.AD_UseSSL" ng-model="activeDirectorySettings.AD_UseSSL"
+                   name="useSSL" style="margin-right:4px;margin-top:7px;width:calc(100% - 100px)">
+            <translate>Use SSL</translate>
+        </label>
+    </div>
+    <div class="control-group text">
+        <label style="width:180px" for="ad-template-ad_domain"><translate>Active Directory Domain</translate></label>
+        <input id="ad-template-ad_domain" ng-model="activeDirectorySettings.AD_DomainName" style="width:60%" />
+    </div>
+    <div class="control-group text">
+        <label style="width:180px" for="ad-template-ad_ip"><translate>Active Directory IP</translate></label>
+        <input id="ad-template-ad_ip" ng-model="activeDirectorySettings.AD_IP" name="ad_ip" style="width:60%"
+               title="{{'the IP address of the AD server, will be populated with information found in your hosts file' | translate}}" disabled/>
+    </div>
+    <div id="ad-template-specific-groups" ng-hide="displayOnly" style="padding-top:10px">
+        <div class="control-group text">
+            <label style="width:180px" for="ad-template-superuser_group"><translate>Unitrends Superuser Group</translate></label>
+            <input id="ad-template-superuser_group" ng-model="activeDirectorySettings.AD_Superuser" name="ad_superuser_group" style="width:60%"/>
+        </div>
+        <div class="control-group text">
+            <label style="width:180px" for="ad-template-admin_group"><translate>Unitrends Admin Group</translate></label>
+            <input id="ad-template-admin_group" ng-model="activeDirectorySettings.AD_Admin" name="ad_admin_group" style="width:60%"/>
+        </div>
+        <div class="control-group text">
+            <label style="width:180px" for="ad-template-manage_group"><translate>Unitrends Manage Group</translate></label>
+            <input id="ad-template-manage_group" ng-model="activeDirectorySettings.AD_Manage" name="ad_manage_group" style="width:60%"/>
+        </div>
+        <div class="control-group text">
+            <label style="width:180px" for="ad-template-monitor_group"><translate>Unitrends Monitor Group</translate></label>
+            <input id="ad-template-monitor_group" ng-model="activeDirectorySettings.AD_Monitor" name="ad_monitor_group" style="width:60%"/>
+        </div>
+    </div>
+</section>
